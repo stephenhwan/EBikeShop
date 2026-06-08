@@ -337,3 +337,4 @@ D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\obj\Debug\net10.0\refint\EBikeShop.M
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\obj\Debug\net10.0\EBikeShop.MVC.pdb
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\obj\Debug\net10.0\EBikeShop.MVC.genruntimeconfig.cache
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\obj\Debug\net10.0\ref\EBikeShop.MVC.dll
+D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\obj\Debug\net10.0\EBikeShop.MVC.sourcelink.json

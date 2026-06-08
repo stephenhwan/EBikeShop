@@ -29,7 +29,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="@formAction">
+        <form asp-action="@formAction" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (!isCreate)
             {
@@ -40,6 +40,19 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            @if (Model != null && !string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <div class="form-group" style="text-align: center;">
+                    <img src="@Url.Content("~/" + Model.ImagePath)" width="150" height="150" />
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" type="file" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" rows="7" class="form-control"></textarea>
@@ -56,9 +69,10 @@
                 <span asp-validation-for="BrandName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-control">
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group" style="text-align: center; margin-top: 10px">
                 @* <input type="submit" value="@buttonName" class="btn btn-primary" /> *@
@@ -79,7 +93,7 @@
     }
 
     <script>
-        function getBikeDetail(idBike) 
+        function getBikeDetail(idBike)
         {
             $.ajax({
                 url: "/Bikes/Details",    // Đường dẫn đến API hoặc file server.

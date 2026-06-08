@@ -1,7 +1,9 @@
-﻿using EBikeShop.MVC.Data;
+﻿using EBikeShop.MVC.Configs;
+using EBikeShop.MVC.Data;
 using EBikeShop.MVC.Data.Entities;
 using EBikeShop.MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EBikeShop.MVC.Controllers
@@ -53,8 +55,18 @@ namespace EBikeShop.MVC.Controllers
         }
 
         // GET: Bikes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var categories = await _context.Categories
+                .OrderByDescending(c => c.Position)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Name = c.Position + ". " + c.Name
+                })
+                .ToListAsync();
+            ViewBag.CategoryList = new SelectList(categories, "Id", "Name");
+            //ViewBag.CategoryList = new SelectList(categories, "Id", "Description");
             return View();
         }
 
@@ -72,12 +84,35 @@ namespace EBikeShop.MVC.Controllers
                 {
                     Name = bikeVM.Name.Trim(),
                     BrandName = bikeVM.BrandName.Trim(),
+                    CategoryId = bikeVM.CategoryId,
                     //Category = bikeVM.Category.Trim(),
                     Description = bikeVM.Description?.Trim(),
                     Year = bikeVM.Year,
                     Position = ++countBikes
                 };
                 _context.Bikes.Add(bike);
+
+                #region Xử lý ảnh
+                var file = bikeVM.Image;
+                if(file != null && file.Length > 0)
+                {
+                    string[] validImages = { ".jpg", ".jpeg", ".png", };
+                    var fileName = file.FileName;
+                    var extension = Path.GetExtension(file.FileName).ToLower();
+                    if (validImages.Contains(extension))
+                    {
+                        if (file.Length > 5242880) return BadRequest("File không được vượt quá 5MB.");
+                        var storedFileName = Guid.NewGuid().ToString() + extension;
+                        var filePath = Path.Combine("wwwroot", AppConstants.ImageFolderPath, storedFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        bike.ImageName = storedFileName;
+                    }
+                }
+                #endregion
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Create));
             }
@@ -103,7 +138,9 @@ namespace EBikeShop.MVC.Controllers
                 Name = bike.Name,
                 BrandName = bike.BrandName,
                 Year = bike.Year,
+                ImagePath = Path.Combine(AppConstants.ImageFolderPath, bike.ImageName),
                 //Category = bike.Category,
+                CategoryId = bike.CategoryId,
                 Description = bike.Description,
                 Position = bike.Position,
             };
@@ -135,6 +172,7 @@ namespace EBikeShop.MVC.Controllers
                         bike.Name = bikeVM.Name.Trim();
                         bike.BrandName = bikeVM.BrandName.Trim();
                         bike.Year = bikeVM.Year;
+                        bike.CategoryId = bikeVM.CategoryId;
                         //bike.Category = bikeVM.Category.Trim();
                         bike.Description = bikeVM?.Description;
                     }

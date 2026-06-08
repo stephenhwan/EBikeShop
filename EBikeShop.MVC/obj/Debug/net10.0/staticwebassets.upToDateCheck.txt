@@ -61,6 +61,7 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\media\images\00633aff-7854-41cb-aa27-6b75e2ff51c5.jpg
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\wwwroot\lib\jquery\LICENSE.txt
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\wwwroot\lib\jquery\dist\jquery.slim.min.map
 D:\Workspace\AMD201\EBikeShop\EBikeShop.MVC\wwwroot\lib\jquery\dist\jquery.slim.min.js

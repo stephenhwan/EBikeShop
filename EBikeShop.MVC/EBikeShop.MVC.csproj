@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Data\Configurations\" />
+    <Folder Include="wwwroot\media\images\" />
+    <Folder Include="wwwroot\media\audios\" />
+    <Folder Include="wwwroot\media\movies18plus\" />
   </ItemGroup>
 
   <ItemGroup>

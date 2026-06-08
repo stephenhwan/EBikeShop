@@ -14,6 +14,9 @@ namespace EBikeShop.MVC.Data.Entities
         [MaxLength(150)]
         public string Name { get; set; } = string.Empty;
 
+        [MaxLength(255)]
+        public string? ImageName { get; set; }
+
         [MaxLength(5000)]
         public string? Description { get; set; }
 
