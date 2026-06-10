@@ -236,7 +236,7 @@ namespace EBikeShop.MVC.Controllers
             try
             {
                 var bikes = await _context.Bikes
-                .Where(b => b.Category222 != null || b.Category222 != "")
+                .Where(b => b.CategoryName != null || b.CategoryName != "")
                 .ToListAsync();
                 //var category = await _context.Categories.ToListAsync();
                 var countCate = await _context.Categories.CountAsync();
@@ -245,7 +245,7 @@ namespace EBikeShop.MVC.Controllers
                 {
                     foreach (var bike in bikes)
                     {
-                        var cateName = bike.Category222.Trim().ToUpper();
+                        var cateName = bike.CategoryName.Trim().ToUpper();
                         var category = await _context.Categories
                             .Where(c => c.Name.Trim().ToUpper() == cateName)
                             .FirstOrDefaultAsync();
@@ -253,11 +253,12 @@ namespace EBikeShop.MVC.Controllers
                         {
                             bike.CategoryId = category.Id;
                         }
+
                         else
                         {
                             var newCategory = new Category
                             {
-                                Name = bike.Category222.Trim(),
+                                Name = bike.CategoryName.Trim(),
                                 Position = ++countCate,
                             };
                             _context.Categories.Add(newCategory);

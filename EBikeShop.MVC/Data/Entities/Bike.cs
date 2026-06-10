@@ -30,7 +30,7 @@ namespace EBikeShop.MVC.Data.Entities
         //public string? Image { get; set; }
 
         [MaxLength(150)]
-        public string Category222 { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
 
         public Guid? CategoryId { get; set; }
         public virtual Category Category { get; set; }
