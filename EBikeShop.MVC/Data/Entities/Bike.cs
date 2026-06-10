@@ -2,6 +2,7 @@
 
 namespace EBikeShop.MVC.Data.Entities
 {
+
     public class Bike
     {
         public Bike()
@@ -14,6 +15,7 @@ namespace EBikeShop.MVC.Data.Entities
         [MaxLength(150)]
         public string Name { get; set; } = string.Empty;
 
+
         [MaxLength(5000)]
         public string? Description { get; set; }
 
@@ -22,10 +24,14 @@ namespace EBikeShop.MVC.Data.Entities
 
         [MaxLength(150)]
         public string BrandName { get; set; } = string.Empty;
-        //public string? Image { get; set; }
+		public int Position { get; set; }
 
-        [MaxLength(150)]
-        public string Category { get; set; } = string.Empty;
+		[MaxLength(150)]
+		public string CategoryName{ get; set; } = string.Empty;
 
-    }
+		public Guid? CategoryId { get; set; }
+
+		public ICollection<BikeMedia> BikeMedias { get; set; } = new List<BikeMedia>();
+
+	}
 }

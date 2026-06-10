@@ -16,7 +16,13 @@ namespace EBikeShop.MVC.Data
         //=== Step 2: Khai báo DbSet ===//
         public DbSet<Bike> Bikes { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<BikeMedia> BikeMedias { get; set; }
+		public DbSet<Media> Medias { get; set; }
+
+
 		//=== Step 3: Khai báo OnConfiguring (nếu cần) ===//
+
 
 		//=== Step 4: Khai báo OnModelCreating ===//
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,13 +51,26 @@ namespace EBikeShop.MVC.Data
                 entity.Property(e => e.BrandName)
                       .IsRequired()
                       .HasMaxLength(150);
-                entity.Property(e => e.Category)
+                entity.Property(e => e.CategoryName)
                       .IsRequired()
                       .HasMaxLength(150);
 
             });
+			modelBuilder.Entity<BikeMedia>(entity =>
+			{
+				// Composite Primary Key
+				entity.HasKey(bm => new { bm.BikeId, bm.MediaId });
 
-        }
+				entity.HasOne(bm => bm.Bike)
+					  .WithMany(b => b.BikeMedias)
+					  .HasForeignKey(bm => bm.BikeId);
+
+				entity.HasOne(bm => bm.Media)
+					  .WithMany(m => m.BikeMedias)
+					  .HasForeignKey(bm => bm.MediaId);
+			});
+
+		}
 
 
 
