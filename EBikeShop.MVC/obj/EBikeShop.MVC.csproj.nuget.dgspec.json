@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Workspace\\AMD201\\EBikeShop\\EBikeShop.MVC\\EBikeShop.MVC.csproj": {}
+    "C:\\GreDoc\\Year 3\\AMD(ASP)\\EBikeShop_26_06_09\\AMD-2026-Monday-222\\EBikeShop.MVC\\EBikeShop.MVC.csproj": {}
   },
   "projects": {
-    "D:\\Workspace\\AMD201\\EBikeShop\\EBikeShop.MVC\\EBikeShop.MVC.csproj": {
+    "C:\\GreDoc\\Year 3\\AMD(ASP)\\EBikeShop_26_06_09\\AMD-2026-Monday-222\\EBikeShop.MVC\\EBikeShop.MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\AMD201\\EBikeShop\\EBikeShop.MVC\\EBikeShop.MVC.csproj",
+        "projectUniqueName": "C:\\GreDoc\\Year 3\\AMD(ASP)\\EBikeShop_26_06_09\\AMD-2026-Monday-222\\EBikeShop.MVC\\EBikeShop.MVC.csproj",
         "projectName": "EBikeShop.MVC",
-        "projectPath": "D:\\Workspace\\AMD201\\EBikeShop\\EBikeShop.MVC\\EBikeShop.MVC.csproj",
-        "packagesPath": "C:\\Users\\Riolish\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\AMD201\\EBikeShop\\EBikeShop.MVC\\obj\\",
+        "projectPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\EBikeShop_26_06_09\\AMD-2026-Monday-222\\EBikeShop.MVC\\EBikeShop.MVC.csproj",
+        "packagesPath": "C:\\Users\\stephenhwan\\.nuget\\packages\\",
+        "outputPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\EBikeShop_26_06_09\\AMD-2026-Monday-222\\EBikeShop.MVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Riolish\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\stephenhwan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,12 +26,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -50,7 +48,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
@@ -105,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
