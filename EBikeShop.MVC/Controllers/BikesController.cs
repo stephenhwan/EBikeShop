@@ -20,7 +20,20 @@ namespace EBikeShop.MVC.Controllers
 		// GET: Bikes
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Bikes.ToListAsync());
+			return View(await _context.Bikes
+			.Include(b => b.Category)
+			.OrderByDescending(b => b.Position)
+			.Select(b => new BikeVM
+			{
+				Id = b.Id,
+				Name = b.Name,
+				BrandName = b.BrandName,
+				CategoryName = b.Category != null ? b.Category.Name : "",
+				Description = b.Description,
+				Position = b.Position,
+				Year = b.Year,
+			})
+			.ToListAsync());
 		}
 
 		// GET: Bikes/Details/5
@@ -34,13 +47,14 @@ namespace EBikeShop.MVC.Controllers
 			//var bike = await _context.Bikes
 			//    .FirstOrDefaultAsync(m => m.Id == id);
 			var bikeVM = await _context.Bikes
+				.Include(b => b.Category)
 				.Where(m => m.Id == id)
 				.Select(b => new BikeVM
 				{
 					Id = b.Id,
 					Name = b.Name,
 					BrandName = b.BrandName,
-					//Category = b.Category,
+					CategoryName = b.Category != null ? b.Category.Name : "",
 					Description = b.Description,
 					Position = b.Position,
 					Year = b.Year,
@@ -77,14 +91,24 @@ namespace EBikeShop.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(BikeVM bikeVM)
 		{
+
 			if (ModelState.IsValid)
 			{
 				var countBikes = await _context.Bikes.CountAsync();
+				string categoryName = "";
+				if (bikeVM.CategoryId.HasValue)
+				{
+					var category = await _context.Categories.FindAsync(bikeVM.CategoryId.Value);
+					categoryName = category?.Name ?? "";
+				}
+
 				var bike = new Bike
 				{
+					Id = Guid.NewGuid(),
 					Name = bikeVM.Name.Trim(),
 					BrandName = bikeVM.BrandName.Trim(),
 					CategoryId = bikeVM.CategoryId,
+					CategoryName = categoryName,
 					Description = bikeVM.Description?.Trim(),
 					Year = bikeVM.Year,
 					Position = ++countBikes
@@ -106,7 +130,7 @@ namespace EBikeShop.MVC.Controllers
 
 					if (file.Length > 5242880)
 						return BadRequest("File không được vượt quá 5MB.");
-
+					//lưu đường dẫn trên ổ đĩa 
 					var storedFileName = Guid.NewGuid().ToString() + extension;
 					var filePath = Path.Combine("wwwroot", AppConstants.ImageFolderPath, storedFileName);
 
@@ -115,33 +139,35 @@ namespace EBikeShop.MVC.Controllers
 						await file.CopyToAsync(fileStream);
 					}
 
-					var media = new Media
-					{
-						Id = Guid.NewGuid(),
-						FileName = file.FileName,
-						StoredFileName = storedFileName,
-						FilePath = filePath,
-						FileType = extension,
-						FileSize = file.Length,
-					};
-					_context.Medias.Add(media);
-
-					var bikeMedia = new BikeMedia
-					{
-						Id = Guid.NewGuid(),
-						BikeId = bike.Id,
-						MediaId = media.Id,
-					};
-					_context.BikeMedias.Add(bikeMedia); // ✅ Lỗi 1: đã thêm
-				}
+					//lưu vào db
+					var webPath = $"/{AppConstants.ImageFolderPath.Replace("\\", "/")}/{storedFileName}";
+				
+				var media = new Media
+				{
+					Id = Guid.NewGuid(),
+					FileName = file.FileName,
+					StoredFileName = storedFileName,
+					FilePath = webPath,
+					FileType = extension,
+					FileSize = file.Length,
+				};
+				_context.Medias.Add(media);
+				var bikeMedia = new BikeMedia
+				{
+					BikeId = bike.Id,
+					MediaId = media.Id,
+				};
+				_context.BikeMedias.Add(bikeMedia);
+			}
 				#endregion
 
-				await _context.SaveChangesAsync(); // ✅ Lỗi 2: luôn Save dù có ảnh hay không
-				return RedirectToAction(nameof(Index)); // ✅ Lỗi 3: luôn có return
-			}
-
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 			return View(bikeVM);
 		}
+	
+		
 
 		// GET: Bikes/Edit/5
 		public async Task<IActionResult> Edit(Guid? id)
@@ -213,13 +239,14 @@ namespace EBikeShop.MVC.Controllers
 						throw;
 					}
 				}
-				return RedirectToAction(nameof(Create));
+				return RedirectToAction(nameof(Index));
 			}
 			//return View(bike);
 			return View(nameof(Create), bikeVM);
 		}
 
 		// GET: Bikes/Delete/5
+
 		public async Task<IActionResult> Delete(Guid? id)
 		{
 			if (id == null)
@@ -260,7 +287,7 @@ namespace EBikeShop.MVC.Controllers
 			try
 			{
 				var bikes = await _context.Bikes
-				.Where(b => b.CategoryName != null || b.CategoryName != "")
+				.Where(b => b.CategoryName != null && b.CategoryName != "")
 				.ToListAsync();
 				//var category = await _context.Categories.ToListAsync();
 				var countCate = await _context.Categories.CountAsync();

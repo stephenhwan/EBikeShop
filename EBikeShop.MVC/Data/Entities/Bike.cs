@@ -27,9 +27,10 @@ namespace EBikeShop.MVC.Data.Entities
 		public int Position { get; set; }
 
 		[MaxLength(150)]
-		public string CategoryName{ get; set; } = string.Empty;
+		public string? CategoryName { get; set; }
 
 		public Guid? CategoryId { get; set; }
+		public Category? Category { get; set; }
 
 		public ICollection<BikeMedia> BikeMedias { get; set; } = new List<BikeMedia>();
 

@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EBikeShop.MVC.ViewModels
 {
-    [Bind("Id,Name,Description,Image,Year,BrandName,CategoryId")]
+    [Bind("Id,Name,Description,Image,Year,BrandName,CategoryId,CategoryName")]
     public class BikeVM
     {
-        public Guid Id { get; set; }
+		public Guid Id { get; set; }
 
-        [MaxLength(150)]
+		[MaxLength(150)]
         public string Name { get; set; } = string.Empty;
 
         [MaxLength(5000)]
@@ -28,6 +28,7 @@ namespace EBikeShop.MVC.ViewModels
 
         //[MaxLength(150)]
         //public string Category { get; set; } = string.Empty;
-        public Guid? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
+		public Guid? CategoryId { get; set; }
     }
 }

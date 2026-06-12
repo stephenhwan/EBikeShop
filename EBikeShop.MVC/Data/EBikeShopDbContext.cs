@@ -52,15 +52,27 @@ namespace EBikeShop.MVC.Data
                       .IsRequired()
                       .HasMaxLength(150);
                 entity.Property(e => e.CategoryName)
-                      .IsRequired()
                       .HasMaxLength(150);
 
-            });
+			 });
+			modelBuilder.Entity<Category>()
+				.ToTable(t =>
+				{
+					t.HasCheckConstraint("CK_Category_Position", "[Position] >= 1 AND [Position] <= 2147483647");
+				});
+
+			modelBuilder.Entity<Category>(entity =>
+			{
+				entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(150);
+				entity.Property(e => e.Description)
+                .HasMaxLength(5000);
+			});
+
 			modelBuilder.Entity<BikeMedia>(entity =>
 			{
-				// Composite Primary Key
-				entity.HasKey(bm => new { bm.BikeId, bm.MediaId });
-
+                
 				entity.HasOne(bm => bm.Bike)
 					  .WithMany(b => b.BikeMedias)
 					  .HasForeignKey(bm => bm.BikeId);
