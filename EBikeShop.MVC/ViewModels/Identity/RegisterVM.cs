@@ -1,0 +1,52 @@
+﻿using EBikeShop.MVC.Configs;
+using System.ComponentModel.DataAnnotations;
+
+namespace EBikeShop.MVC.ViewModels.Identity
+{
+    public class RegisterVM
+    {
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [MaxLength(MaxLengths.FullName)]
+        public string? FullName { get; set; }
+        [MaxLength(MaxLengths.FullName)]
+        public string? DisplayName { get; set; }
+        [MaxLength(MaxLengths.FileName)]
+        public string? Avatar { get; set; }
+
+        [MaxLength(MaxLengths.Phone)]
+        [DataType(DataType.PhoneNumber)]
+
+        public string? Phone { get; set; }
+
+        //TODO: Add properties for registration (e.g., Email, Password, ConfirmPassword, etc.)
+        public string ReturnUrl { get; set; } = "/";
+    }
+}
