@@ -1,5 +1,6 @@
 using EBikeShop.MVC.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ builder.Services.AddDbContext<EBikeShopDbContext>(options =>
 		builder.Configuration.GetConnectionString("EBikeShopConnection")
 	)
 );
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BikeIdentityDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

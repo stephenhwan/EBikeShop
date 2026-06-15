@@ -115,51 +115,51 @@ namespace EBikeShop.MVC.Controllers
 				};
 				_context.Bikes.Add(bike);
 
-				#region Xử lý ảnh
-				var file = bikeVM.Image;
-				if (file != null && file.Length > 0)
-				{
-					string[] validImages = { ".jpg", ".jpeg", ".png" };
-					var extension = Path.GetExtension(file.FileName).ToLower();
+			//	#region Xử lý ảnh
+			//	var file = bikeVM.Image;
+			//	if (file != null && file.Length > 0)
+			//	{
+			//		string[] validImages = { ".jpg", ".jpeg", ".png" };
+			//		var extension = Path.GetExtension(file.FileName).ToLower();
 
-					if (!validImages.Contains(extension))
-					{
-						ModelState.AddModelError("Image", "Chỉ chấp nhận .jpg, .jpeg, .png");
-						return View(bikeVM); // ✅ return sớm nếu sai định dạng
-					}
+			//		if (!validImages.Contains(extension))
+			//		{
+			//			ModelState.AddModelError("Image", "Chỉ chấp nhận .jpg, .jpeg, .png");
+			//			return View(bikeVM); // ✅ return sớm nếu sai định dạng
+			//		}
 
-					if (file.Length > 5242880)
-						return BadRequest("File không được vượt quá 5MB.");
-					//lưu đường dẫn trên ổ đĩa 
-					var storedFileName = Guid.NewGuid().ToString() + extension;
-					var filePath = Path.Combine("wwwroot", AppConstants.ImageFolderPath, storedFileName);
+			//		if (file.Length > 5242880)
+			//			return BadRequest("File không được vượt quá 5MB.");
+			//		//lưu đường dẫn trên ổ đĩa 
+			//		var storedFileName = Guid.NewGuid().ToString() + extension;
+			//		var filePath = Path.Combine("wwwroot", AppConstants.ImageFolderPath, storedFileName);
 
-					using (var fileStream = new FileStream(filePath, FileMode.Create))
-					{
-						await file.CopyToAsync(fileStream);
-					}
+			//		using (var fileStream = new FileStream(filePath, FileMode.Create))
+			//		{
+			//			await file.CopyToAsync(fileStream);
+			//		}
 
-					//lưu vào db
-					var webPath = $"/{AppConstants.ImageFolderPath.Replace("\\", "/")}/{storedFileName}";
+			//		//lưu vào db
+			//		var webPath = $"/{AppConstants.ImageFolderPath.Replace("\\", "/")}/{storedFileName}";
 				
-				var media = new Media
-				{
-					Id = Guid.NewGuid(),
-					FileName = file.FileName,
-					StoredFileName = storedFileName,
-					FilePath = webPath,
-					FileType = extension,
-					FileSize = file.Length,
-				};
-				_context.Medias.Add(media);
-				var bikeMedia = new BikeMedia
-				{
-					BikeId = bike.Id,
-					MediaId = media.Id,
-				};
-				_context.BikeMedias.Add(bikeMedia);
-			}
-				#endregion
+			//	var media = new Media
+			//	{
+			//		Id = Guid.NewGuid(),
+			//		FileName = file.FileName,
+			//		StoredFileName = storedFileName,
+			//		FilePath = webPath,
+			//		FileType = extension,
+			//		FileSize = file.Length,
+			//	};
+			//	_context.Medias.Add(media);
+			//	var bikeMedia = new BikeMedia
+			//	{
+			//		BikeId = bike.Id,
+			//		MediaId = media.Id,
+			//	};
+			//	_context.BikeMedias.Add(bikeMedia);
+			//}
+			//	#endregion
 
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
@@ -279,59 +279,107 @@ namespace EBikeShop.MVC.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		public async Task<IActionResult> AutioFixCategoryId()
-		{
-			bool isOK = false;
-			string message = "Chưa thực thi";
+		//public async Task<IActionResult> AutioFixCategoryId()
+		//{
+		//	bool isOK = false;
+		//	string message = "Chưa thực thi";
 
-			try
-			{
-				var bikes = await _context.Bikes
-				.Where(b => b.CategoryName != null && b.CategoryName != "")
-				.ToListAsync();
-				//var category = await _context.Categories.ToListAsync();
-				var countCate = await _context.Categories.CountAsync();
-				//var currentPosition = countCate;
-				if (bikes != null && bikes.Count > 0)
-				{
-					foreach (var bike in bikes)
-					{
-						var cateName = bike.CategoryName.Trim().ToUpper();
-						var category = await _context.Categories
-							.Where(c => c.Name.Trim().ToUpper() == cateName)
-							.FirstOrDefaultAsync();
-						if (category != null)
-						{
-							bike.CategoryId = category.Id;
-						}
-						else
-						{
-							var newCategory = new Category
-							{
-								Name = bike.CategoryName.Trim(),
-								Position = ++countCate,
-							};
-							_context.Categories.Add(newCategory);
-							bike.CategoryId = newCategory.Id;
-						}
-						await _context.SaveChangesAsync();
-					}
-					isOK = true;
-					message = "Chạy thành công";
-				}
-			}
-			catch (Exception ex)
-			{
-				message = "Lỗi " + ex.Message;
-			}
+		//	try
+		//	{
+		//		var bikes = await _context.Bikes
+		//		.Where(b => b.CategoryName != null && b.CategoryName != "")
+		//		.ToListAsync();
+		//		//var category = await _context.Categories.ToListAsync();
+		//		var countCate = await _context.Categories.CountAsync();
+		//		//var currentPosition = countCate;
+		//		if (bikes != null && bikes.Count > 0)
+		//		{
+		//			foreach (var bike in bikes)
+		//			{
+		//				var cateName = bike.CategoryName.Trim().ToUpper();
+		//				var category = await _context.Categories
+		//					.Where(c => c.Name.Trim().ToUpper() == cateName)
+		//					.FirstOrDefaultAsync();
+		//				if (category != null)
+		//				{
+		//					bike.CategoryId = category.Id;
+		//				}
+		//				else
+		//				{
+		//					var newCategory = new Category
+		//					{
+		//						Name = bike.CategoryName.Trim(),
+		//						Position = ++countCate,
+		//					};
+		//					_context.Categories.Add(newCategory);
+		//					bike.CategoryId = newCategory.Id;
+		//				}
+		//				await _context.SaveChangesAsync();
+		//			}
+		//			isOK = true;
+		//			message = "Chạy thành công";
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		message = "Lỗi " + ex.Message;
+		//	}
 
 
-			return Json(new { isOK, message });
-		}
+		//	return Json(new { isOK, message });
+		//}
 
 		private bool BikeExists(Guid id)
 		{
 			return _context.Bikes.Any(e => e.Id == id);
 		}
+	//	#region Xử lý ảnh
+	//	public async Task<IActionResult> UploadImage(Guid bikeId, Bike bike)
+	//	{
+	//	var file = bikeVM.Image;
+	//	if (file != null && file.Length > 0)
+	//	{
+	//		string[] validImages = { ".jpg", ".jpeg", ".png" };
+	//		var extension = Path.GetExtension(file.FileName).ToLower();
+
+	//		if (!validImages.Contains(extension))
+	//		{
+	//			ModelState.AddModelError("Image", "Chỉ chấp nhận .jpg, .jpeg, .png");
+	//			return View(bikeVM); // ✅ return sớm nếu sai định dạng
+	//		}
+
+	//		if (file.Length > 5242880)
+	//			return BadRequest("File không được vượt quá 5MB.");
+	//		//lưu đường dẫn trên ổ đĩa 
+	//		var storedFileName = Guid.NewGuid().ToString() + extension;
+	//		var filePath = Path.Combine("wwwroot", AppConstants.ImageFolderPath, storedFileName);
+
+	//		using (var fileStream = new FileStream(filePath, FileMode.Create))
+	//		{
+	//			await file.CopyToAsync(fileStream);
+	//		}
+
+	//		//lưu vào db
+	//		var webPath = $"/{AppConstants.ImageFolderPath.Replace("\\", "/")}/{storedFileName}";
+				
+	//	var media = new Media
+	//	{
+	//		Id = Guid.NewGuid(),
+	//		FileName = file.FileName,
+	//		StoredFileName = storedFileName,
+	//		FilePath = webPath,
+	//		FileType = extension,
+	//		FileSize = file.Length,
+	//	};
+	//	_context.Medias.Add(media);
+	//	var bikeMedia = new BikeMedia
+	//	{
+	//		BikeId = bike.Id,
+	//		MediaId = media.Id,
+	//	};
+	//	_context.BikeMedias.Add(bikeMedia);
+	//	await _context.SaveChangesAsync();
+	//}	
+	//#endregion
 	}
 }
