@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EBikeShop.MVC.ViewModels.Identity
 {
-	public class LoginVM
+	public class LoginVM 
 	{
 		/// <summary>
 		///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

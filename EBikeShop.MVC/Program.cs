@@ -45,7 +45,7 @@ builder.Services.AddDefaultIdentity<BikeIdentityUser>(options =>
 // Add cookies 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-	options.LoginPath = "/Identity/Account/Login";
+	options.LoginPath = "/Authentication/Login";
 	options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
@@ -94,5 +94,6 @@ app.MapControllerRoute(
 	//pattern: "{controller=Bikes}/{action=Create}/{id?}")
 	pattern: "{controller=Home}/{action=Index}/{id?}")
 	.WithStaticAssets();
+app.MapRazorPages();
 
 app.Run();
