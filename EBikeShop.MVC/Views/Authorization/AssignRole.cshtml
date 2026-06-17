@@ -1,0 +1,27 @@
+﻿@model EBikeShop.MVC.ViewModels.Identity.AssignRoleVM
+
+@{
+    ViewData["Title"] = "Assign Role";
+}
+
+<h2>Gán Role cho user: @Model.UserEmail</h2>
+
+<form method="post" asp-action="AssignRole">
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="UserEmail" />
+
+    @foreach (var role in Model.AllRoles)
+    {
+        <div class="form-check">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="SelectedRoles"
+                   value="@role"
+            @(Model.UserRoles.Contains(role) ? "checked" : "") />
+            <label class="form-check-label">@role</label>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary mt-3">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Hủy</a>
+</form>

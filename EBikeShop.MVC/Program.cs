@@ -1,7 +1,7 @@
 using EBikeShop.MVC.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using EBikeShop.MVC.Data.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +22,7 @@ builder.Services.AddDbContext<BikeIdentityDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<BikeIdentityUser>(options =>
 {
-	//options.SignIn.RequireConfirmedAccount = true;
+	options.SignIn.RequireConfirmedAccount = false;
 	// Password settings
 	options.Password.RequireDigit = true;
 	options.Password.RequiredLength = 8;
@@ -57,7 +57,10 @@ builder.Services.AddSession(options =>
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-
+//app role 
+builder.Services.AddIdentity<BikeIdentityRole, IdentityRole>()
+	.AddEntityFrameworkStores<BikeIdentityDbContext>()
+	.AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -78,6 +81,22 @@ else
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 }
+
+//seeding role to database
+using (var scope = app.Services.CreateScope())
+{
+	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+	string[] roles = { "Admin", "Manager", "Customer" };
+	foreach (var role in roles)
+	{
+		if (!await roleManager.RoleExistsAsync(role))
+		{
+			await roleManager.CreateAsync(new IdentityRole(role));
+		}
+	}
+}
+
 
 app.UseHttpsRedirection();
 

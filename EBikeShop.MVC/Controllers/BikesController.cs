@@ -233,19 +233,24 @@ namespace EBikeShop.MVC.Controllers
 
 		public async Task<IActionResult> Delete(Guid? id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+			if (id == null) return NotFound();
 
 			var bike = await _context.Bikes
+				.Include(b => b.Category)
 				.FirstOrDefaultAsync(m => m.Id == id);
-			if (bike == null)
-			{
-				return NotFound();
-			}
+			if (bike == null) return NotFound();
 
-			return View(bike);
+			// Phải map sang BikeVM vì view đang dùng @model BikeVM
+			var bikeVM = new BikeVM
+			{
+				Id = bike.Id,
+				Name = bike.Name,
+				BrandName = bike.BrandName,
+				Description = bike.Description,
+				Year = bike.Year,
+				Position = bike.Position,
+			};
+			return View(bikeVM);
 		}
 
 		// POST: Bikes/Delete/5

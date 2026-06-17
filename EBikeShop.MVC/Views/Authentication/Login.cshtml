@@ -3,7 +3,14 @@
     ViewData["Title"] = "Login";
     // Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@if (TempData["ConfirmSuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["ConfirmSuccess"]</div>
+}
+@if (TempData["ConfirmError"] != null)
+{
+    <div class="alert alert-danger">@TempData["ConfirmError"]</div>
+}
 
 <h1>@ViewData["Title"]</h1>
 <div class="row">

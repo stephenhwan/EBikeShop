@@ -18,6 +18,7 @@ namespace EBikeShop.MVC.Controllers
 		private readonly IUserStore<BikeIdentityUser> _userStore;
 		private readonly IUserEmailStore<BikeIdentityUser> _emailStore;
 		private readonly ILogger<RegisterVM> _logger;
+		private readonly RoleManager<IdentityRole> _roleManager;
 		//private readonly IEmailSender _emailSender;
 
 
@@ -25,6 +26,7 @@ namespace EBikeShop.MVC.Controllers
 			UserManager<BikeIdentityUser> userManager,
 			IUserStore<BikeIdentityUser> userStore,
 			SignInManager<BikeIdentityUser> signInManager,
+			RoleManager<IdentityRole> roleManager,
 			ILogger<RegisterVM> logger,
 			IEmailSender emailSender)
 		{
@@ -33,6 +35,7 @@ namespace EBikeShop.MVC.Controllers
 			_emailStore = GetEmailStore();
 			_signInManager = signInManager;
 			_logger = logger;
+			_roleManager = roleManager;
 			//_emailSender = emailSender;
 		}
 
@@ -109,6 +112,7 @@ namespace EBikeShop.MVC.Controllers
 
 				if (result.Succeeded)
 				{
+					await _userManager.AddToRoleAsync(user, "Customer");
 					_logger.LogInformation("User created a new account with password.");
 
 					var userId = await _userManager.GetUserIdAsync(user);
@@ -195,10 +199,12 @@ namespace EBikeShop.MVC.Controllers
 
 			if (result.Succeeded)
 			{
-				return LocalRedirect(returnUrl);
+				TempData["ConfirmSuccess"] = "Email confirmed! Please log in.";
+				return RedirectToAction("Login", new { returnUrl = returnUrl });
 
 			}
-			return LocalRedirect(returnUrl);
+			TempData["ConfirmError"] = "Email confirmation failed.";
+			return RedirectToAction("Login", new { returnUrl = returnUrl });
 		}
 
 
