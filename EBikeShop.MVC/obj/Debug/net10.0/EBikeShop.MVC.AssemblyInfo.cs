@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EBikeShop.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+610377065d0b96e0e7faf03f9d535173411defdd")]
 [assembly: System.Reflection.AssemblyProductAttribute("EBikeShop.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EBikeShop.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
