@@ -1,11 +1,24 @@
 {
   "version": 2,
-  "dgSpecHash": "DR+Fwfxt464=",
+  "dgSpecHash": "IXUK1lqYtws=",
   "success": true,
-  "projectFilePath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
+  "projectFilePath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stephenhwan\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.7\\microsoft.aspnetcore.openapi.10.0.7.nupkg.sha512",
     "C:\\Users\\stephenhwan\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

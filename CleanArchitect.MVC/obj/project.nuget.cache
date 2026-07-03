@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WG53+zo9D4Y=",
+  "dgSpecHash": "lIk/wDTWSV8=",
   "success": true,
-  "projectFilePath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.MVC\\CleanArchitect.MVC.csproj",
+  "projectFilePath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.MVC\\CleanArchitect.MVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stephenhwan\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\stephenhwan\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

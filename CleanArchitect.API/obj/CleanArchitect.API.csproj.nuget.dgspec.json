@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj": {}
+    "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj": {}
   },
   "projects": {
-    "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj": {
+    "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
+        "projectUniqueName": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
         "projectName": "CleanArchitect.API",
-        "projectPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
+        "projectPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\CleanArchitect.API.csproj",
         "packagesPath": "C:\\Users\\stephenhwan\\.nuget\\packages\\",
-        "outputPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\26-06-23-Clean-Architecture\\CleanArchitect_2026_06_22\\CleanArchitect\\CleanArchitect.API\\obj\\",
+        "outputPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\CleanArchitect_2026_06_29\\CleanArchitect\\CleanArchitect.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

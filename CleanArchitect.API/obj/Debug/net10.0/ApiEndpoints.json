@@ -1,0 +1,177 @@
+[
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.SampleProductController",
+    "Method": "GetAll",
+    "RelativePath": "api/SampleProduct",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CleanArchitect.API.Controllers.ProductDto, CleanArchitect.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Description": "API n\u00E0y s\u1EBD tr\u1EA3 v\u1EC1 t\u1EA5t c\u1EA3 c\u00E1c s\u1EA3n ph\u1EA9m hi\u1EC7n c\u00F3 trong h\u1EC7 th\u1ED1ng kh\u00F4ng ph\u00E2n trang.",
+    "Summary": "L\u1EA5y to\u00E0n b\u1ED9 danh s\u00E1ch s\u1EA3n ph\u1EA9m"
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.SampleProductController",
+    "Method": "Create",
+    "RelativePath": "api/SampleProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "CleanArchitect.API.Controllers.CreateProductDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CleanArchitect.API.Controllers.ProductDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "Description": "Th\u00EAm m\u1ED9t s\u1EA3n ph\u1EA9m m\u1EDBi v\u00E0o h\u1EC7 th\u1ED1ng. D\u1EEF li\u1EC7u \u0111\u1EA7u v\u00E0o s\u1EBD \u0111\u01B0\u1EE3c t\u1EF1 \u0111\u1ED9ng validate.",
+    "Summary": "T\u1EA1o m\u1EDBi m\u1ED9t s\u1EA3n ph\u1EA9m"
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.SampleProductController",
+    "Method": "GetById",
+    "RelativePath": "api/SampleProduct/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CleanArchitect.API.Controllers.ProductDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ],
+    "Description": "Truy\u1EC1n ID c\u1EE7a s\u1EA3n ph\u1EA9m d\u01B0\u1EDBi d\u1EA1ng s\u1ED1 nguy\u00EAn \u0111\u1EC3 l\u1EA5y th\u00F4ng tin chi ti\u1EBFt.",
+    "Summary": "L\u1EA5y chi ti\u1EBFt m\u1ED9t s\u1EA3n ph\u1EA9m theo ID"
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.CategoriesController",
+    "Method": "Create",
+    "RelativePath": "Categories/CreateBike",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dtoCategory",
+        "Type": "CleanArchitect.Application.DTOs.BikeShop.CategoryDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.CategoriesController",
+    "Method": "GetAll",
+    "RelativePath": "Categories/GetAllCates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CleanArchitect.API.WeatherForecast, CleanArchitect.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.WeatherForecastController",
+    "Method": "GetTestABC222",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [],
+    "EndpointName": "GetTest2222"
+  },
+  {
+    "ContainingType": "CleanArchitect.API.Controllers.WeatherForecastController",
+    "Method": "GetTestABC",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetTest"
+  }
+]
