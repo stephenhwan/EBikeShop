@@ -1,0 +1,20 @@
+﻿using PollBuilder.Domain.Entities;
+
+namespace PollBuilder.Application.DTOs
+{
+	public class PollDto
+	{
+		public Guid Id { get; set; }
+		public string Title { get; set; }
+		public string Url { get; set; }
+		public string Status { get; set; }
+		public List<QuestionDto> Questions { get; set; }
+		public List<OptionDto> Options { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime? ClosedAt { get; set; }
+
+		//key
+		public Guid? UserId { get; set; }
+		public virtual UserDto User { get; set; }
+	}
+}

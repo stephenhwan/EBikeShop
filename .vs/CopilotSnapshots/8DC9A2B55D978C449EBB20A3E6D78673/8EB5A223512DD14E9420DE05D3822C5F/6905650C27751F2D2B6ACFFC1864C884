@@ -1,0 +1,13 @@
+﻿using PollBuilder.Domain.Entities;
+
+namespace PollBuilder.Application.DTOs
+{
+	public class QuestionDto
+	{
+		public Guid Id { get; set; }
+		public string Text { get; set; }
+		public int Position { get; set; }
+		public Guid Pollid { get; set; }
+		public virtual Poll Poll { get; set; }
+	}
+}

@@ -1,0 +1,185 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{82BF3E47-C7EE-6D3D-3060-66575E3CE9A6}|PollBuilder.Domain\\PollBuilder.Domain.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.domain\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82BF3E47-C7EE-6D3D-3060-66575E3CE9A6}|PollBuilder.Domain\\PollBuilder.Domain.csproj|solutionrelative:pollbuilder.domain\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.application\\exceptions\\pollclosedexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|solutionrelative:pollbuilder.application\\exceptions\\pollclosedexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33803BBA-63E7-022F-C595-470EC6E75301}|PollBuilder.API\\PollBuilder.API.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.api\\controllers\\pollcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33803BBA-63E7-022F-C595-470EC6E75301}|PollBuilder.API\\PollBuilder.API.csproj|solutionrelative:pollbuilder.api\\controllers\\pollcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33803BBA-63E7-022F-C595-470EC6E75301}|PollBuilder.API\\PollBuilder.API.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33803BBA-63E7-022F-C595-470EC6E75301}|PollBuilder.API\\PollBuilder.API.csproj|solutionrelative:pollbuilder.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.application\\features\\polls\\queries\\getpollbycode\\getpollbycodehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|solutionrelative:pollbuilder.application\\features\\polls\\queries\\getpollbycode\\getpollbycodehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.application\\features\\polls\\queries\\getpollbycode\\getpollbycode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{605234B9-4FF3-5BE2-6148-7A4FA8F24D9D}|PollBuilder.Application\\PollBuilder.Application.csproj|solutionrelative:pollbuilder.application\\features\\polls\\queries\\getpollbycode\\getpollbycode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82BF3E47-C7EE-6D3D-3060-66575E3CE9A6}|PollBuilder.Domain\\PollBuilder.Domain.csproj|c:\\gredoc\\year 3\\amd(asp)\\pollbuilder_26_07_03\\pollbuilder.mvc\\pollbuilder.domain\\entities\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82BF3E47-C7EE-6D3D-3060-66575E3CE9A6}|PollBuilder.Domain\\PollBuilder.Domain.csproj|solutionrelative:pollbuilder.domain\\entities\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 367,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.API\\Program.cs",
+              "RelativeDocumentMoniker": "PollBuilder.API\\Program.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.API\\Program.cs",
+              "RelativeToolTip": "PollBuilder.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:53:00.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PollClosedException.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Exceptions\\PollClosedException.cs",
+              "RelativeDocumentMoniker": "PollBuilder.Application\\Exceptions\\PollClosedException.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Exceptions\\PollClosedException.cs",
+              "RelativeToolTip": "PollBuilder.Application\\Exceptions\\PollClosedException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:52:56.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Poll.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Domain\\Entities\\Poll.cs",
+              "RelativeDocumentMoniker": "PollBuilder.Domain\\Entities\\Poll.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Domain\\Entities\\Poll.cs",
+              "RelativeToolTip": "PollBuilder.Domain\\Entities\\Poll.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:18:39.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Option.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Domain\\Entities\\Option.cs",
+              "RelativeDocumentMoniker": "PollBuilder.Domain\\Entities\\Option.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Domain\\Entities\\Option.cs",
+              "RelativeToolTip": "PollBuilder.Domain\\Entities\\Option.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:18:38.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PollController.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.API\\Controllers\\PollController.cs",
+              "RelativeDocumentMoniker": "PollBuilder.API\\Controllers\\PollController.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.API\\Controllers\\PollController.cs",
+              "RelativeToolTip": "PollBuilder.API\\Controllers\\PollController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAADwvy4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:07:48.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GetPollByCodeHandler.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCodeHandler.cs",
+              "RelativeDocumentMoniker": "PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCodeHandler.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCodeHandler.cs",
+              "RelativeToolTip": "PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCodeHandler.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwC4AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:05:11.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GetPollByCode.cs",
+              "DocumentMoniker": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCode.cs",
+              "RelativeDocumentMoniker": "PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCode.cs",
+              "ToolTip": "C:\\GreDoc\\Year 3\\AMD(ASP)\\PollBuilder_26_07_03\\PollBuilder.MVC\\PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCode.cs",
+              "RelativeToolTip": "PollBuilder.Application\\Features\\Polls\\Queries\\GetPollByCode\\GetPollByCode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T06:03:55.358Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 37,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+﻿namespace PollBuilder.Application.DTOs
+{
+	public class PollResultDto
+	{
+		public string Url { get; set; }
+		public List<QuestionResultDto>  Questions { get; set; }
+		public int VoteCount { get; set; }
+	}
+}
