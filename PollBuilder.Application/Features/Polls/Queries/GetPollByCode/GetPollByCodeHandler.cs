@@ -26,7 +26,6 @@ namespace PollBuilder.Application.Features.Polls.Queries.GetPollByCode
 						{
 							Id = p.Id,
 							Title = p.Title,
-							Status = p.Status,
 							Url = p.Url,
 							CreatedAt = p.CreatedAt,
 							ClosedAt = p.ClosedAt,

@@ -36,7 +36,7 @@ public class SubmitPollVoteHandler : IRequestHandler<SubmitPollVoteCommand, bool
 			throw new NotFoundException(nameof(Poll), request.PollId.ToString()); 
 		}
 
-		if (poll.Status == PollStatus.Closed || poll.ClosedAt < DateTime.UtcNow)
+		if (poll.Status == false || poll.ClosedAt < DateTime.UtcNow)
 		{
 			throw new ValidationException("Cuộc bình chọn này đã kết thúc hoặc bị đóng."); 
 		}

@@ -5,7 +5,7 @@ using PollBuilder.Domain.Entities;
 using PollBuilder.Infrastructure.DbContexts;
 namespace PollBuilder.Infrastructure.Services
 {
-	public class PollService : IPollService
+	public class PollService
 	{
 		private readonly PollBuilderDbContext _context;
 

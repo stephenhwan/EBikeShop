@@ -5,11 +5,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using PollBuilder.Application.Interfaces;
 using PollBuilder.Domain.Entities.Identity;
 
 namespace PollBuilder.Infrastructure.Services
 {
-	public class JwtTokenService
+	public class JwtTokenService : IJwtTokenService
 	{
 		private readonly IConfiguration _config;
 		// Nhận object IConfiguration chứa dữ liệu của appsettings.json

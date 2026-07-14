@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
     <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
   </ItemGroup>
@@ -17,5 +18,8 @@
     <ProjectReference Include="..\PollBuilder.Common\PollBuilder.Common.csproj" />
     <ProjectReference Include="..\PollBuilder.Domain\PollBuilder.Domain.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>
