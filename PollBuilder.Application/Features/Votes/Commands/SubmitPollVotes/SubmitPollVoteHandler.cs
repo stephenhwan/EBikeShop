@@ -5,7 +5,7 @@ using PollBuilder.Application.Exceptions;
 using PollBuilder.Application.Features.Votes.Commands.SubmitPollVotes;
 using PollBuilder.Application.Interfaces;
 using PollBuilder.Common.Contants;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 
 public class SubmitPollVoteHandler : IRequestHandler<SubmitPollVoteCommand, bool>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PollBuilder.Common.Configs;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 namespace PollBuilder.Infrastructure.DbContexts.Configurations
 {
@@ -28,11 +28,7 @@ namespace PollBuilder.Infrastructure.DbContexts.Configurations
 
 			// 3 FK bắt buộc: chỉ cascade 1 nhánh (Option) để tránh
 			// lỗi "multiple cascade paths" của SQL Server
-			builder.HasOne(v => v.User)
-				.WithMany()
-				.HasForeignKey(v => v.UserId)
-				.OnDelete(DeleteBehavior.Restrict)
-				.IsRequired();
+
 
 			builder.HasOne(v => v.Question)
 				.WithMany()

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PollBuilder.Application.DTOs;
 using PollBuilder.Application.Exceptions;
 using PollBuilder.Application.Interfaces;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 namespace PollBuilder.Application.Features.Polls.Queries.GetPollByResult
 {

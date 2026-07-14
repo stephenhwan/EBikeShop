@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PollBuilder.Common.Configs;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 namespace PollBuilder.Infrastructure.DbContexts.Configurations
 {
@@ -15,30 +15,35 @@ namespace PollBuilder.Infrastructure.DbContexts.Configurations
 
 			builder.Property(p => p.Title)
 				.IsRequired()
-				.HasMaxLength(MaxLenghs.PollTitle);
+				.HasMaxLength(255);
 
 			builder.Property(p => p.Url)
 				.IsRequired()
-				.HasMaxLength(2048);
+				.HasMaxLength(500);
 
 			builder.Property(p => p.Status)
-				.IsRequired()
-				.HasMaxLength(20);
+				.IsRequired();
 
 			builder.Property(p => p.CreatedAt)
-				.IsRequired()
-				.HasDefaultValueSql("GETUTCDATE()");
+				.IsRequired();
 
-			builder.Property(p => p.ClosedAt)
-				.IsRequired(false);
+			builder.Property(p => p.ClosedAt);
 
-			builder.HasIndex(p => p.Url).IsUnique();
+			builder.Property(p => p.StartAt);
 
-			builder.HasOne(p => p.User)
-				.WithMany()
-				.HasForeignKey(p => p.UserId)
-				.OnDelete(DeleteBehavior.SetNull)
-				.IsRequired(false);
+			builder.Property(p => p.EndAt);
+
+			builder.Property(p => p.UserId)
+				.IsRequired();
+
+			// ⭐ QUAN TRỌNG: chặn EF Core map IsOpen thành cột
+			builder.Ignore(p => p.IsOpen);
+
+			builder.HasMany(p => p.Questions)
+				.WithOne()
+				.HasForeignKey("PollId")
+				.OnDelete(DeleteBehavior.Cascade);
+
 		}
 	}
 }

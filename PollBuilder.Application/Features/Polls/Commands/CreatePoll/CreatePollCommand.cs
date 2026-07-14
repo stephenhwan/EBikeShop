@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PollBuilder.Domain.Entities;
 namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 {
 
@@ -10,13 +9,15 @@ namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 	int Position
 	);
 	public record CreateQuestionCommand(
-	string QuestionText, 
+	string QuestionText,
 	int Position,
 	List<CreateOptionCommand> Options
 	);
 	public record CreatePollCommand(
-	string Title, 
-	List<CreateQuestionCommand> Questions, 
+	string Title,
+		DateTime StartAt,
+		DateTime EndAt,
+	List<CreateQuestionCommand> Questions,
 	Guid? UserId
 	) : IRequest<string>;
 

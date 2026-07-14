@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PollBuilder.Application.Interfaces;
 using PollBuilder.Common.Contants;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 
 namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
@@ -10,11 +10,14 @@ namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 	// 1. Khai báo Handler (Logic xử lý)
 	public class CreatePollHandler : IRequestHandler<CreatePollCommand, string>
 	{
+		private readonly ICurrentUserService _currentUserService;
 		private readonly IPollBuilderDbContext _context;
 
 		// Tiêm (Inject) IPollBuilderDbContext vào để tương tác với Database
-		public CreatePollHandler(IPollBuilderDbContext context)
+		public CreatePollHandler(IPollBuilderDbContext context,
+		ICurrentUserService currentUserService)
 		{
+			_currentUserService = currentUserService;
 			_context = context;
 		}
 
@@ -28,9 +31,12 @@ namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 			{
 				Url = code,
 				Title = request.Title,
-				Status = PollStatus.Open,
+				Status = true,
+				StartAt = request.StartAt,
+				EndAt = request.EndAt,
+				UserId = _currentUserService.UserId,
 				CreatedAt = DateTime.UtcNow,
-				UserId = request.UserId,
+
 				Questions = new List<Question>()
 			};
 			foreach (var questionRequest in request.Questions)

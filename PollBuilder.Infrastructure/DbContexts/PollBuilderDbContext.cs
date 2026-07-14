@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PollBuilder.Application.Interfaces;
-using PollBuilder.Domain.Entities;
+using PollBuilder.Domain.Entities.Identity;
+using PollBuilder.Domain.Entities.PollBuilder;
 
 namespace PollBuilder.Infrastructure.DbContexts
 {
@@ -21,7 +22,6 @@ namespace PollBuilder.Infrastructure.DbContexts
 
 		//Cho Entity Framework Core biết rõ đây là các bảng cần được lập bản đồ(mapping) và quản lý dưới Database.
 
-		public DbSet<User> Users { get; set; }
 		public DbSet<Poll> Polls { get; set; }
 		public DbSet<Question> Questions { get; set; }
 		public DbSet<Option> Options { get; set; }
@@ -35,12 +35,7 @@ namespace PollBuilder.Infrastructure.DbContexts
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<User>(builder =>
-			{
-				// Dòng mã này sẽ tự động tìm tất cả các lớp triển khai IEntityTypeConfiguration 
-				// nằm trong cùng Assembly (chính là project Infrastructure này) và áp dụng chúng.
-				modelBuilder.ApplyConfigurationsFromAssembly(typeof(PollBuilderDbContext).Assembly);
-			});
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(PollBuilderDbContext).Assembly);
 		}
 	}
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PollBuilder.Application
 {
-	internal class ApplicationDI
+	public class ApplicationDI
 	{
 	}
 }
