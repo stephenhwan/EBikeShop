@@ -6,7 +6,7 @@ using PollBuilder.Domain.Entities.Identity;
 
 namespace PollBuilder.Infrastructure.DbContexts
 {
-	public class PollBuilderIdentityDbContext : IdentityDbContext, IPollBuilderIdentityDbContext
+	public class PollBuilderIdentityDbContext : IdentityDbContext<User, UserRole, string>, IPollBuilderIdentityDbContext
 	{
 		public PollBuilderIdentityDbContext(
 			DbContextOptions<PollBuilderIdentityDbContext> options)
@@ -14,8 +14,7 @@ namespace PollBuilder.Infrastructure.DbContexts
 		{
 
 		}
-		public DbSet<User> Users { get; set; }
-		public DbSet<UserRole> UserRole { get; set; }
 
+		public DbSet<UserRole> UserRole => Roles;
 	}
 }

@@ -29,11 +29,11 @@ public class SubmitPollVoteHandler : IRequestHandler<SubmitPollVoteCommand, bool
 		var poll = await _context.Polls
 			.Include(p => p.Questions)
 			.ThenInclude(q => q.Options)
-			.FirstOrDefaultAsync(p => p.Id == request.PollId, cancellationToken);
+			.FirstOrDefaultAsync(p => p.Url == request.Url, cancellationToken);
 
 		if (poll == null)
 		{
-			throw new NotFoundException(nameof(Poll), request.PollId.ToString()); 
+			throw new NotFoundException(nameof(Poll), request.Url); 
 		}
 
 		if (poll.Status == false || poll.ClosedAt < DateTime.UtcNow)

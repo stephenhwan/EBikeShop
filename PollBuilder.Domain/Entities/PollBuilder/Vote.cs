@@ -13,7 +13,7 @@ namespace PollBuilder.Domain.Entities.PollBuilder
 
 
 		// key
-		public Guid? UserId { get; set; }
+		public string UserId { get; set; }
 		public Guid OptionId { get; set; }
 		public virtual Option Option { get; set; }
 		public Guid QuestionId { get; set; }

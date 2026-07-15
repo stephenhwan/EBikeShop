@@ -31,7 +31,7 @@ namespace PollBuilder.Infrastructure.Services
 				issuer: _config["Jwt:Issuer"],
 				audience: _config["Jwt:Audience"],
 				claims: claims,
-				expires: DateTime.UtcNow.AddHours(2),
+				expires: DateTime.UtcNow.AddHours(5),
 				signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
 			return new JwtSecurityTokenHandler().WriteToken(token);

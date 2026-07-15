@@ -3,8 +3,8 @@
 namespace PollBuilder.Application.Features.Votes.Commands.SubmitPollVotes
 {
 	public record SubmitPollVoteCommand(
-	Guid PollId,
-	Guid UserId,
+	string Url,
+	string UserId,
 	List<Guid> SelectedOptionIds) : IRequest<bool>;
 
 }

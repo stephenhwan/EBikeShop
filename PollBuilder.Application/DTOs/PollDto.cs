@@ -7,11 +7,15 @@ namespace PollBuilder.Application.DTOs
 		public Guid Id { get; set; }
 		public string Title { get; set; }
 		public string Url { get; set; }
-		public string Status { get; set; }
+		public bool Status { get; set; }
 		public List<QuestionDto> Questions { get; set; }
-		public List<OptionDto> Options { get; set; }
+
 		public DateTime CreatedAt { get; set; }
 		public DateTime? ClosedAt { get; set; }
+
+		public DateTime? StartAt { get; set; }
+
+		public DateTime? EndAt { get; set; }
 
 		//key
 		public Guid? UserId { get; set; }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PollBuilder.Application.Interfaces;
 using PollBuilder.Domain.Entities.Identity;
@@ -11,30 +8,24 @@ namespace PollBuilder.Application.Features.Auth.Commands.Register
 {
 	public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
 	{
-		private readonly UserManager<User> _userManager;
+		private readonly IIdentityService _identityService;
 		private readonly IJwtTokenService _jwtTokenService;
 		private readonly ILogger<RegisterCommandHandler> _logger;
 
 		public RegisterCommandHandler(
-			UserManager<User> userManager,
+			IIdentityService identityService,
 			IJwtTokenService jwtTokenService,
 			ILogger<RegisterCommandHandler> logger)
 		{
-			_userManager = userManager;
+			_identityService = identityService;
 			_jwtTokenService = jwtTokenService;
 			_logger = logger;
 		}
 
 		public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
 		{
-			// Bước 1: Check 2 mật khẩu có khớp không
-			if (request.Password != request.ConfirmPassword)
-			{
-				throw new InvalidOperationException("Mật khẩu xác nhận không khớp.");
-			}
-
-			// Bước 2: Check email đã tồn tại chưa
-			var existingUser = await _userManager.FindByEmailAsync(request.Email);
+	
+			var existingUser = await _identityService.FindByEmailAsync(request.Email);
 			if (existingUser != null)
 			{
 				throw new InvalidOperationException("Email này đã được đăng ký.");
@@ -44,11 +35,13 @@ namespace PollBuilder.Application.Features.Auth.Commands.Register
 			var user = new User
 			{
 				Email = request.Email,
-				UserName = request.FullName,   // Identity yêu cầu UserName, dùng luôn Email cho đơn giản
+				CreatedAt = DateTime.UtcNow,
+				UserName = request.Email,
+				FullName = request.FullName,   // Identity yêu cầu UserName, dùng luôn Email cho đơn giản
 
 			};
 
-			var result = await _userManager.CreateAsync(user, request.Password);
+			var result = await _identityService.CreateAsync(user, request.Password);
 
 			if (!result.Succeeded)
 			{

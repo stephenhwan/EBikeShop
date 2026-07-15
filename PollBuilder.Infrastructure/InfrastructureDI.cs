@@ -1,8 +1,12 @@
 ﻿
+using System.Reflection;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PollBuilder.Application.Behaviors;
 using PollBuilder.Application.Interfaces;
 using PollBuilder.Domain.Entities.Identity;
 using PollBuilder.Infrastructure.DbContexts;
@@ -19,9 +23,10 @@ namespace PollBuilder.Infrastructure
 			services.AddScoped<IPollBuilderDbContext>(provider =>
 				provider.GetRequiredService<PollBuilderDbContext>());
 
+			services.AddScoped<IIdentityService, IdentityService>();
 			// THÊM DÒNG NÀY — context Identity phải được đăng ký riêng
 			services.AddDbContext<PollBuilderIdentityDbContext>(options =>
-				options.UseSqlServer(configuration.GetConnectionString("PollBuilderConnection")));
+				options.UseSqlServer(configuration.GetConnectionString("PollBuilderIdentityConnection")));
 
 			services.AddHttpContextAccessor();
 			services.AddScoped<ICurrentUserService, CurrentUserService>();

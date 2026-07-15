@@ -18,7 +18,7 @@ namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 		DateTime StartAt,
 		DateTime EndAt,
 	List<CreateQuestionCommand> Questions,
-	Guid? UserId
+	string UserId
 	) : IRequest<string>;
 
 

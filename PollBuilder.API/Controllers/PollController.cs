@@ -1,13 +1,19 @@
-﻿using MediatR;
+﻿using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PollBuilder.Application.Features.Polls.Commands.ClosePoll;
 using PollBuilder.Application.Features.Polls.Commands.CreatePoll;
 using PollBuilder.Application.Features.Polls.Queries.GetPollByCode;
 using PollBuilder.Application.Features.Polls.Queries.GetPollByResult;
+using PollBuilder.Application.Features.Votes.Commands.SubmitPollVotes;
 namespace PollBuilder.API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class PollController : ControllerBase
 	{
 		private readonly IMediator _mediator;
@@ -22,14 +28,14 @@ namespace PollBuilder.API.Controllers
 		public async Task<IActionResult> Create([FromBody] CreatePollCommand command, CancellationToken cancellationToken)
 		{
 			var url = await _mediator.Send(command, cancellationToken);
-			return CreatedAtAction(nameof(GetByCode), new { Url = url });
+			return Ok(new { Url = url });
 		}
 
-		// GET: api/poll/{code}
-		[HttpGet("{code}")]
-		public async Task<IActionResult> GetByCode(string code, CancellationToken cancellationToken)
+		// GET: api/poll/{url}
+		[HttpGet("{url}")]
+		public async Task<IActionResult> GetByCode(string url, CancellationToken cancellationToken)
 		{
-			var poll = await _mediator.Send(new GetPollByCode(code), cancellationToken);
+			var poll = await _mediator.Send(new GetPollByCode(url), cancellationToken);
 
 			if (poll == null)
 				return NotFound();
@@ -37,11 +43,11 @@ namespace PollBuilder.API.Controllers
 			return Ok(poll);
 		}
 
-		// GET: api/poll/{code}/results
-		[HttpGet("{code}/results")]
-		public async Task<IActionResult> GetResults(string code, CancellationToken cancellationToken)
+		// GET: api/poll/{url}/results
+		[HttpGet("{url}/results")]
+		public async Task<IActionResult> GetResults(string url, CancellationToken cancellationToken)
 		{
-			var result = await _mediator.Send(new GetPollResultQuery(code), cancellationToken);
+			var result = await _mediator.Send(new GetPollResultQuery(url), cancellationToken);
 			return Ok(result);
 		}
 
@@ -51,6 +57,18 @@ namespace PollBuilder.API.Controllers
 		{
 			var success = await _mediator.Send(new ClosePollCommand(id), cancellationToken);
 			return Ok(new { success });
+		}
+		// POST: api/poll/vote
+		[HttpPost("{url}/vote")]
+		public async Task<IActionResult> SubmitVote(
+		string url,
+		[FromBody] List<Guid> selectedOptionIds,
+		CancellationToken cancellationToken)
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var command = new SubmitPollVoteCommand(url, userId, selectedOptionIds);
+			var result = await _mediator.Send(command, cancellationToken);
+			return Ok(new { success = result });
 		}
 	}
 }

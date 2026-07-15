@@ -9,11 +9,11 @@ namespace PollBuilder.Domain.Entities.PollBuilder
 		public string Url { get; set; }
 		public bool Status { get; set; }
 		public ICollection<Question> Questions { get; set; } = new List<Question>();
-		public DateTime CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; } = DateTime.Now;
 		public DateTime? ClosedAt { get; set; }
 		public DateTime StartAt { get; set; }
 		public DateTime EndAt { get; set; }
-		public Guid UserId { get; set; }
+		public string UserId { get; set; }
 		// computed property
 		public bool IsOpen => Status
 			&& StartAt <= DateTime.UtcNow

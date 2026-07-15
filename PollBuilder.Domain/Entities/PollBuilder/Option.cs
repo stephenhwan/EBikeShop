@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PollBuilder.Domain.Entities.PollBuilder
+﻿namespace PollBuilder.Domain.Entities.PollBuilder
 {
 	public class Option
 	{

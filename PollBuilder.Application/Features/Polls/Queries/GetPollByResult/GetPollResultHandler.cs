@@ -22,28 +22,30 @@ namespace PollBuilder.Application.Features.Polls.Queries.GetPollByResult
 			var poll = await _context.Polls
 				.Include(p => p.Questions)
 					.ThenInclude(q => q.Options)
-				.FirstOrDefaultAsync(p => p.Url == request.Code, cancellationToken)
-				?? throw new NotFoundException(nameof(Poll), request.Code);
+				.FirstOrDefaultAsync(p => p.Url == request.url, cancellationToken)
+				?? throw new NotFoundException(nameof(Poll), request.url);
 			// 2. Lấy danh sách QuestionId
 			var questionId = poll.Questions
 				.Select(q => q.Id)
 				.ToList();
 
 			// Group vote theo OptionId (đã denormalize sẵn nên query nhanh, không cần join Question)
+
 			var voteCounts = await _context.Votes
-				.Where(v =>
-					v.IsCurrent &&
-					questionId.Contains(v.QuestionId))
-				.GroupBy(v => v.OptionId)
-				.Select(g => new
-				{
-					OptionId = g.Key,
-					Count = g.Count()
-				})
-				.ToDictionaryAsync(
-					x => x.OptionId,
-					x => x.Count,
-					cancellationToken);
+					.Where(v =>
+						v.IsCurrent &&
+						questionId.Contains(v.QuestionId))
+					.GroupBy(v => v.OptionId)
+					.Select(g => new
+					{
+						OptionId = g.Key,
+						Count = g.Count()
+					})
+					.ToDictionaryAsync(
+						x => x.OptionId,
+						x => x.Count,
+						cancellationToken);
+
 
 			// 4. Map Question -> DTO
 			var questions = poll.Questions
@@ -60,7 +62,7 @@ namespace PollBuilder.Application.Features.Polls.Queries.GetPollByResult
 							Id = o.Id,
 							Position = o.Position,
 							OptionText = o.OptionText,
-							VoteCount = voteCounts.GetValueOrDefault(o.Id, 0)
+							IsCurrent = voteCounts.ContainsKey(o.Id)
 						})
 						.ToList()
 				})
