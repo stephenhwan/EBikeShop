@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using ValidationException = PollBuilder.Application.Exceptions.ValidationException;
 
 
 namespace PollBuilder.Application.Behaviors

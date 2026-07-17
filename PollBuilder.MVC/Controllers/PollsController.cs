@@ -49,12 +49,19 @@ namespace PollBuilder.MVC.Controllers
 		[HttpPost("create")]
 		public async Task<IActionResult> Create([FromBody] CreatePollRequestDto request)
 		{
-			var url = await _pollApiClient.CreatePollAsync(request);
+			try
+			{
+				var url = await _pollApiClient.CreatePollAsync(request);
 
-			if (string.IsNullOrEmpty(url))
-				return BadRequest("Tạo poll thất bại.");
+				if (string.IsNullOrEmpty(url))
+					return BadRequest("Tạo poll thất bại.");
 
-			return Ok(new { url });
+				return Ok(new { url });
+			}
+			catch (HttpRequestException ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 	}
 }

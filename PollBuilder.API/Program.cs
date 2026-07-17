@@ -1,7 +1,8 @@
 using System.Text;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using PollBuilder.API;
 using PollBuilder.Application.Features.Polls.Commands.CreatePoll;
 using PollBuilder.Infrastructure;
 using Scalar.AspNetCore;
@@ -45,7 +46,7 @@ IdentityModelEventSource.ShowPII = true;
 var app = builder.Build();
 
 
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 

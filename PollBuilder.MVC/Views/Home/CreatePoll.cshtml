@@ -138,21 +138,68 @@
         if (hasError) { errorBox.textContent = "Vui lòng điền đầy đủ nội dung câu hỏi và các lựa chọn."; return; }
 
         const payload = { title, startAt, endAt, questions };
-
         fetch("/poll/create", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin", // hoặc "include" nếu khác domain
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(payload)
         })
         .then(async function (res) {
-            if (!res.ok) throw new Error((await res.text()) || "Tạo poll thất bại.");
+
+            // Chưa đăng nhập hoặc token hết hạn
+            if (res.status === 401) {
+                window.location.href =
+                    "/Account/Login?returnUrl=" +
+                    encodeURIComponent(window.location.pathname);
+                return;
+            }
+
+            // Không có quyền
+            if (res.status === 403) {
+                throw new Error("Bạn không có quyền thực hiện chức năng này.");
+            }
+
+            if (!res.ok) {
+
+                let errorMessage = "Tạo poll thất bại.";
+
+                try {
+
+                    const error = await res.json();
+
+                    if (error.message) {
+                        errorMessage = error.message;
+                    }
+
+                    if (error.errors) {
+                        errorMessage += "\n" +
+                            Object.values(error.errors)
+                                .flat()
+                                .join("\n");
+                    }
+
+                } catch {
+
+                    errorMessage = await res.text();
+
+                }
+
+                throw new Error(errorMessage);
+            }
+
             return res.json();
         })
         .then(function (data) {
+
             window.location.href = "/poll/" + data.url + "/vote";
+
         })
         .catch(function (err) {
+
             errorBox.textContent = err.message;
+
         });
     });
 

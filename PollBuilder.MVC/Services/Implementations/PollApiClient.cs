@@ -38,7 +38,7 @@ namespace PollBuilder.MVC.Services.Implementations
 		public async Task<string?> CreatePollAsync(CreatePollRequestDto request)
 		{
 			var response = await _httpClient.PostAsJsonAsync("api/poll", request);
-			if (!response.IsSuccessStatusCode) return null;
+
 
 			// console log for debug
 			if (!response.IsSuccessStatusCode)
