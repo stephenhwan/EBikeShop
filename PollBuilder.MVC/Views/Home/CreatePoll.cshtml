@@ -1,209 +1,167 @@
-﻿@{
+﻿@model PollBuilder.MVC.ViewModels.PollBuilder.CreatePollVM
+
+@{
     ViewData["Title"] = "Create Poll";
 }
 
-<h1>Tạo Poll mới</h1>
+<h1>Create New Poll</h1>
 
 <div class="row">
     <div class="col-md-8">
-        <div class="mb-3">
-            <label class="form-label">Tiêu đề Poll</label>
-            <input type="text" id="pollTitle" class="form-control" placeholder="Nhập tiêu đề poll" />
-        </div>
+        @* Sử dụng Form tag helper, tự động gen Action và chống CSRF *@
+        <form asp-action="Create" asp-controller="Polls" method="post" id="createPollForm">
+            
+            @* Hiển thị lỗi chung (ví dụ: lỗi từ catch block trong controller) *@
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label class="form-label">Thời gian bắt đầu</label>
-                <input type="datetime-local" id="startAt" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Poll Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Enter poll title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Thời gian kết thúc</label>
-                <input type="datetime-local" id="endAt" class="form-control" />
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="StartAt" class="form-label">Start Time</label>
+                    <input asp-for="StartAt" class="form-control" />
+                    <span asp-validation-for="StartAt" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="EndAt" class="form-label">End Time</label>
+                    <input asp-for="EndAt" class="form-control" />
+                    <span asp-validation-for="EndAt" class="text-danger"></span>
+                </div>
             </div>
-        </div>
 
-        <div id="questionsContainer"></div>
+            <div id="questionsContainer">
+                @* Đoạn này dùng để render lại các câu hỏi nếu form bị lỗi (ModelState.IsValid == false) và trả về View *@
+                @if (Model != null && Model.Questions.Any())
+                {
+                    for (int i = 0; i < Model.Questions.Count; i++)
+                    {
+                        <div class="card mb-3 question-block" data-position="@i">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h5 class="card-title">Question @(i + 1)</h5>
+                                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove-question">Remove</button>
+                                </div>
+                                <div class="mb-2">
+                                    <input asp-for="Questions[i].QuestionText" class="form-control question-text" placeholder="Enter question text" />
+                                    <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
+                                    <input type="hidden" asp-for="Questions[i].Position" class="question-pos" value="@i" />
+                                </div>
+                                <label class="form-label">Options</label>
+                                @for (int j = 0; j < Model.Questions[i].Options.Count; j++)
+                                {
+                                    <div class="mb-2">
+                                        <input asp-for="Questions[i].Options[j].OptionText" class="form-control option-text" placeholder="Option @(j + 1)" />
+                                        <span asp-validation-for="Questions[i].Options[j].OptionText" class="text-danger"></span>
+                                        <input type="hidden" asp-for="Questions[i].Options[j].Position" class="option-pos" value="@j" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
 
-        <button type="button" id="btnAddQuestion" class="btn btn-secondary mb-3">+ Add Question</button>
+            <button type="button" id="btnAddQuestion" class="btn btn-secondary mb-3">+ Add Question</button>
+            <span asp-validation-for="Questions" class="text-danger d-block mb-3"></span>
 
-        <div id="createPollError" class="text-danger mb-3"></div>
-
-        <div>
-            <button type="button" id="btnSubmitPoll" class="btn btn-primary">Tạo Poll</button>
-        </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Create Poll</button>
+            </div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
-<script>
-    let questionCount = 0;
-    const OPTIONS_PER_QUESTION = 4;
+    @* Kích hoạt validation ở client-side tự động từ DataAnnotations *@
+    <partial name="_ValidationScriptsPartial" />
 
-    function addQuestion() {
-        const container = document.getElementById("questionsContainer");
-        const position = questionCount; // tăng dần mỗi lần bấm Add Question -> nằm dưới câu hỏi trước
+    <script>
+        const OPTIONS_PER_QUESTION = 4;
 
-        const qBlock = document.createElement("div");
-        qBlock.className = "card mb-3 question-block";
-        qBlock.dataset.position = position;
+        function addQuestion() {
+            const container = document.getElementById("questionsContainer");
+            // Lấy position dựa trên số lượng block hiện tại
+            const position = document.querySelectorAll(".question-block").length;
+            
+            const qBlock = document.createElement("div");
+            qBlock.className = "card mb-3 question-block";
+            qBlock.dataset.position = position;
 
-        let optionsHtml = "";
-        for (let i = 0; i < OPTIONS_PER_QUESTION; i++) {
-            optionsHtml += `
-                <div class="mb-2">
-                    <input type="text" class="form-control option-text" placeholder="Lựa chọn ${i + 1}" />
-                </div>`;
+            let optionsHtml = "";
+            for (let i = 0; i < OPTIONS_PER_QUESTION; i++) {
+                // Đặt 'name' đúng định dạng để Model Binder của C# đọc được thành List (ví dụ: Questions[0].Options[1].OptionText)
+                optionsHtml += `
+                    <div class="mb-2">
+                        <input type="text" name="Questions[${position}].Options[${i}].OptionText" class="form-control option-text" placeholder="Option ${i + 1}" required />
+                        <input type="hidden" name="Questions[${position}].Options[${i}].Position" class="option-pos" value="${i}" />
+                    </div>`;
+            }
+
+            qBlock.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title">Question ${position + 1}</h5>
+                        <button type="button" class="btn btn-sm btn-outline-danger btn-remove-question">Remove</button>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="Questions[${position}].QuestionText" class="form-control question-text" placeholder="Enter question text" required />
+                        <input type="hidden" name="Questions[${position}].Position" class="question-pos" value="${position}" />
+                    </div>
+                    <label class="form-label">Options</label>
+                    ${optionsHtml}
+                </div>
+            `;
+
+            attachRemoveEvent(qBlock.querySelector(".btn-remove-question"));
+            container.appendChild(qBlock);
         }
 
-        qBlock.innerHTML = `
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">Câu hỏi ${position + 1}</h5>
-                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove-question">Xóa</button>
-                </div>
-                <div class="mb-2">
-                    <input type="text" class="form-control question-text" placeholder="Nhập nội dung câu hỏi" />
-                </div>
-                <label class="form-label">Các lựa chọn</label>
-                ${optionsHtml}
-            </div>
-        `;
+        // Đánh lại số thứ tự (index) của attributes 'name' để ASP.NET Core bind vào List không bị lỗi khi xóa 1 item ở giữa
+        function renumberQuestions() {
+            const blocks = document.querySelectorAll(".question-block");
+            blocks.forEach((block, qIdx) => {
+                block.dataset.position = qIdx;
+                block.querySelector(".card-title").textContent = "Question " + (qIdx + 1);
 
-        qBlock.querySelector(".btn-remove-question").addEventListener("click", function () {
-            qBlock.remove();
-            renumberQuestions();
-        });
-
-        container.appendChild(qBlock);
-        questionCount++;
-    }
-
-    function renumberQuestions() {
-        const blocks = document.querySelectorAll(".question-block");
-        blocks.forEach((block, idx) => {
-            block.dataset.position = idx;
-            block.querySelector(".card-title").textContent = "Câu hỏi " + (idx + 1);
-        });
-        questionCount = blocks.length;
-    }
-
-    document.getElementById("btnAddQuestion").addEventListener("click", addQuestion);
-
-    // document.getElementById("btnSubmitPoll").addEventListener("click", function () {
-    //     const errorBox = document.getElementById("createPollError");
-    //     errorBox.textContent = "";
-
-    //     const title = document.getElementById("pollTitle").value.trim();
-    //     const startAt = document.getElementById("startAt").value;
-    //     const endAt = document.getElementById("endAt").value;
-        document.getElementById("btnSubmitPoll").addEventListener("click", function () {
-        const errorBox = document.getElementById("createPollError");
-        errorBox.textContent = "";
-
-        const startAtEl = document.getElementById("startAt");
-        const endAtEl = document.getElementById("endAt");
-
-        console.log("startAt element:", startAtEl);
-        console.log("startAt value:", startAtEl?.value);
-        console.log("endAt element:", endAtEl);
-        console.log("endAt value:", endAtEl?.value);
-
-        const title = document.getElementById("pollTitle").value.trim();
-        const startAt = startAtEl.value;
-        const endAt = endAtEl.value;
-
-        if (!title) { errorBox.textContent = "Vui lòng nhập tiêu đề poll."; return; }
-        if (!startAt || !endAt) { errorBox.textContent = "Vui lòng chọn thời gian bắt đầu và kết thúc."; return; }
-
-        const questionBlocks = document.querySelectorAll(".question-block");
-        if (questionBlocks.length === 0) { errorBox.textContent = "Poll phải có ít nhất 1 câu hỏi."; return; }
-
-        const questions = [];
-        let hasError = false;
-
-        questionBlocks.forEach(function (block, qPos) {
-            const questionText = block.querySelector(".question-text").value.trim();
-            if (!questionText) hasError = true;
-
-            const options = [];
-            block.querySelectorAll(".option-text").forEach(function (input, oPos) {
-                const optionText = input.value.trim();
-                if (!optionText) hasError = true;
-                options.push({ optionText: optionText, position: oPos });
-            });
-
-            questions.push({ questionText: questionText, position: qPos, options: options });
-        });
-
-        if (hasError) { errorBox.textContent = "Vui lòng điền đầy đủ nội dung câu hỏi và các lựa chọn."; return; }
-
-        const payload = { title, startAt, endAt, questions };
-        fetch("/poll/create", {
-            method: "POST",
-            credentials: "same-origin", // hoặc "include" nếu khác domain
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(async function (res) {
-
-            // Chưa đăng nhập hoặc token hết hạn
-            if (res.status === 401) {
-                window.location.href =
-                    "/Account/Login?returnUrl=" +
-                    encodeURIComponent(window.location.pathname);
-                return;
-            }
-
-            // Không có quyền
-            if (res.status === 403) {
-                throw new Error("Bạn không có quyền thực hiện chức năng này.");
-            }
-
-            if (!res.ok) {
-
-                let errorMessage = "Tạo poll thất bại.";
-
-                try {
-
-                    const error = await res.json();
-
-                    if (error.message) {
-                        errorMessage = error.message;
-                    }
-
-                    if (error.errors) {
-                        errorMessage += "\n" +
-                            Object.values(error.errors)
-                                .flat()
-                                .join("\n");
-                    }
-
-                } catch {
-
-                    errorMessage = await res.text();
-
+                // Cập nhật index cho Question
+                block.querySelector(".question-text").name = `Questions[${qIdx}].QuestionText`;
+                const qPos = block.querySelector(".question-pos");
+                if(qPos) {
+                    qPos.name = `Questions[${qIdx}].Position`;
+                    qPos.value = qIdx;
                 }
 
-                throw new Error(errorMessage);
-            }
+                // Cập nhật index cho Options
+                block.querySelectorAll(".option-text").forEach((optInput, oIdx) => {
+                    optInput.name = `Questions[${qIdx}].Options[${oIdx}].OptionText`;
+                });
+                block.querySelectorAll(".option-pos").forEach((optPos, oIdx) => {
+                    optPos.name = `Questions[${qIdx}].Options[${oIdx}].Position`;
+                    optPos.value = oIdx;
+                });
+            });
+        }
 
-            return res.json();
-        })
-        .then(function (data) {
+        function attachRemoveEvent(button) {
+            button.addEventListener("click", function () {
+                this.closest(".question-block").remove();
+                renumberQuestions();
+            });
+        }
 
-            window.location.href = "/poll/" + data.url + "/vote";
+        document.getElementById("btnAddQuestion").addEventListener("click", addQuestion);
 
-        })
-        .catch(function (err) {
+        // Gắn sự kiện Remove cho các câu hỏi có sẵn (trong trường hợp Render lại View do lỗi Validation)
+        document.querySelectorAll(".btn-remove-question").forEach(attachRemoveEvent);
 
-            errorBox.textContent = err.message;
-
-        });
-    });
-
-    // Tự thêm sẵn 1 câu hỏi khi mới vào trang cho tiện
-    addQuestion();
-</script>
+        // Thêm câu hỏi đầu tiên nếu màn hình chưa có câu hỏi nào
+        if (document.querySelectorAll(".question-block").length === 0) {
+            addQuestion();
+        }
+       
+    </script>
 }

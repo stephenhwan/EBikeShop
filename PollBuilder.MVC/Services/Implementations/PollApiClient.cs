@@ -17,6 +17,13 @@ namespace PollBuilder.MVC.Services.Implementations
 			if (!response.IsSuccessStatusCode) return null;
 			return await response.Content.ReadFromJsonAsync<PollResponseDto>();
 		}
+		public async Task<List<PollSummaryResponseDto>> GetAllPollsAsync()
+		{
+			var response = await _httpClient.GetAsync("api/poll");
+			if (!response.IsSuccessStatusCode) 
+			return new List<PollSummaryResponseDto>();
+			return await response.Content.ReadFromJsonAsync<List<PollSummaryResponseDto>>() ?? new();
+		}
 
 		public async Task<PollResultResponseDto?> GetPollResultAsync(string url)
 		{
@@ -30,8 +37,7 @@ namespace PollBuilder.MVC.Services.Implementations
 
 		public async Task<bool> SubmitVoteAsync(string url, List<Guid> selectedOptionIds)
 		{
-			var request = new SubmitVoteRequestDto { SelectedOptionIds = selectedOptionIds };
-			var response = await _httpClient.PostAsJsonAsync($"api/poll/{url}/vote", request);
+			var response = await _httpClient.PostAsJsonAsync($"api/poll/{url}/vote", selectedOptionIds);
 
 			return response.IsSuccessStatusCode;
 		}
@@ -43,9 +49,12 @@ namespace PollBuilder.MVC.Services.Implementations
 			// console log for debug
 			if (!response.IsSuccessStatusCode)
 			{
-				var errorContent = await response.Content.ReadAsStringAsync();
-				Console.WriteLine($"[CreatePollAsync] Status: {response.StatusCode}, Body: {errorContent}");
-				return null;
+				var error = await response.Content.ReadAsStringAsync();
+
+				throw new HttpRequestException(
+					error,
+					null,
+					response.StatusCode);
 			}
 			//
 

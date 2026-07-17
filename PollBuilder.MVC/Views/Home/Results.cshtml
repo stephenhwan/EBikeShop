@@ -1,0 +1,38 @@
+﻿@model List<PollBuilder.MVC.Contracts.Responses.PollSummaryResponseDto>
+@{
+    ViewData["Title"] = "Poll list";
+}
+
+<h2>Poll list</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title Poll</th>
+            <th>Status</th>
+            <th>Created Date</th>
+			<th>Url</th>
+            <th></th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var poll in Model)
+        {
+            <tr>
+                <td>@poll.Title</td>
+                <td>@(poll.Status ? "Opening" : "Closed")</td>
+                <td>@poll.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@poll.Url</td>
+                <td>
+					<a class="btn btn-sm btn-primary" href="/poll/@poll.Url/vote">Vote</a>
+                <td>
+                    @* Chỉ là link thường -> khi bấm mới điều hướng sang trang Result,
+                       lúc đó Result action mới gọi GetPollResultAsync -> lazy load đúng ý bạn *@
+                    <a class="btn btn-sm btn-primary" href="/poll/@poll.Url/result">Result Detail</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

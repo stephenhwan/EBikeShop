@@ -45,7 +45,7 @@
         })
         .then(async function (res) {
             if (!res.ok) throw new Error((await res.text()) || "Vote thất bại.");
-            window.location.href = "/poll/@Model.Url/results";
+            window.location.href = "/poll/@Model.Url/result";
         })
         .catch(function (err) {
             errorBox.textContent = err.message;

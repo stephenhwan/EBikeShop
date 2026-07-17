@@ -2,19 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using PollBuilder.MVC.Contracts.Requests;
 using PollBuilder.MVC.Services.Interfaces;
+using PollBuilder.MVC.ViewModels.PollBuilder;
 
 namespace PollBuilder.MVC.Controllers
 {
+
 	[Authorize]   // cần using Microsoft.AspNetCore.Authorization;
 	[Route("poll")]
 	public class PollsController : Controller
 	{
 		private readonly IPollApiClient _pollApiClient;
 
+
 		[HttpGet("{url}/vote")]
 		public async Task<IActionResult> Vote(string url)
 		{
 			var poll = await _pollApiClient.GetPollAsync(url);
+
 			if (poll == null) return NotFound();
 			return View(poll);
 		}
@@ -34,7 +38,7 @@ namespace PollBuilder.MVC.Controllers
 			_pollApiClient = pollApiClient;
 		}
 
-		[HttpGet("{url}/results")]
+		[HttpGet("{url}/result")]
 		public async Task<IActionResult> Result(string url)
 		{
 			var dto = await _pollApiClient.GetPollResultAsync(url);
@@ -47,20 +51,38 @@ namespace PollBuilder.MVC.Controllers
 
 
 		[HttpPost("create")]
-		public async Task<IActionResult> Create([FromBody] CreatePollRequestDto request)
+		public async Task<IActionResult> Create(CreatePollVM request)
 		{
+			if (!ModelState.IsValid)
+				return View(request);
+
 			try
 			{
-				var url = await _pollApiClient.CreatePollAsync(request);
+				var result = await _pollApiClient.CreatePollAsync(new CreatePollRequestDto
+				{
+					Title = request.Title,
+					StartAt = request.StartAt,
+					EndAt = request.EndAt,
+					Questions = request.Questions.Select(q => new CreateQuestionRequestDto
+					{
+						QuestionText = q.QuestionText,
+						Position = q.Position,
+						Options = q.Options.Select(o => new CreateOptionRequestDto
+						{
+							OptionText = o.OptionText,
+							Position = o.Position
+						}).ToList()
+					}).ToList()
+				});
 
-				if (string.IsNullOrEmpty(url))
-					return BadRequest("Tạo poll thất bại.");
 
-				return Ok(new { url });
+				TempData["SuccessMessage"] = "Poll created successfully!";
+				return RedirectToAction("Results", "Home");
 			}
 			catch (HttpRequestException ex)
 			{
-				return BadRequest(ex.Message);
+				ModelState.AddModelError(string.Empty, ex.Message);
+				return View(request);
 			}
 		}
 	}

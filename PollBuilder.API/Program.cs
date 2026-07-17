@@ -39,6 +39,44 @@ builder.Services
 			IssuerSigningKey = new SymmetricSecurityKey(
 				Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 		};
+
+		// DEBUG TẠM - xóa sau khi tìm ra lỗi
+		options.Events = new JwtBearerEvents
+		{
+			OnMessageReceived = context =>
+			{
+				Console.WriteLine("========== API ==========");
+				Console.WriteLine("Authorization Header:");
+				Console.WriteLine(context.Request.Headers.Authorization.ToString());
+				Console.WriteLine("=========================");
+
+				return Task.CompletedTask;
+			},
+
+			OnTokenValidated = context =>
+			{
+				Console.WriteLine("TOKEN VALIDATED");
+
+				foreach (var claim in context.Principal!.Claims)
+				{
+					Console.WriteLine($"{claim.Type} = {claim.Value}");
+				}
+
+				return Task.CompletedTask;
+			},
+
+			OnAuthenticationFailed = context =>
+			{
+				Console.WriteLine($"FAILED: {context.Exception}");
+				return Task.CompletedTask;
+			},
+
+			OnChallenge = context =>
+			{
+				Console.WriteLine($"CHALLENGE: {context.Error}");
+				return Task.CompletedTask;
+			}
+		};
 	});
 
 builder.Services.AddAuthorization();

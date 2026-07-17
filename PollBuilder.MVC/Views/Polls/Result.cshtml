@@ -6,16 +6,13 @@
 @foreach (var q in Model.Questions)
 {
     <div class="mb-4">
-        <h4>@q.QuestionText</h4>
-        <ul>
+        <h4>Question: @q.QuestionText</h4>
+        <ul style="list-style-type: none; padding-left: 0;">
             @foreach (var o in q.Options)
             {
-                <li>
+                <li class="p-2 mb-1 rounded">
+                    <input type="checkbox" class="form-check-input me-2" checked="@o.IsCurrent" disabled />
                     @o.OptionText
-                    @if (o.IsCurrent)
-                    {
-                        <span>✔</span>
-                    }
                 </li>
             }
         </ul>

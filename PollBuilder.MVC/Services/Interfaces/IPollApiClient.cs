@@ -8,6 +8,7 @@ namespace PollBuilder.MVC.Services.Interfaces
 		Task<PollResponseDto?> GetPollAsync(string url);
 		Task<PollResultResponseDto?> GetPollResultAsync(string url);
 		Task<bool> SubmitVoteAsync(string url, List<Guid> selectedOptionIds);
+		Task<List<PollSummaryResponseDto>> GetAllPollsAsync();
 		Task<string?> CreatePollAsync(CreatePollRequestDto request);
 	}
 }

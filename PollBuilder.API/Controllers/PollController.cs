@@ -1,11 +1,11 @@
 ﻿using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PollBuilder.Application.Features.Polls.Commands.ClosePoll;
 using PollBuilder.Application.Features.Polls.Commands.CreatePoll;
+using PollBuilder.Application.Features.Polls.Queries.GetAllPolls;
 using PollBuilder.Application.Features.Polls.Queries.GetPollByCode;
 using PollBuilder.Application.Features.Polls.Queries.GetPollByResult;
 using PollBuilder.Application.Features.Votes.Commands.SubmitPollVotes;
@@ -29,6 +29,13 @@ namespace PollBuilder.API.Controllers
 		{
 			var url = await _mediator.Send(command, cancellationToken);
 			return Ok(new { Url = url });
+		}
+		// GET: api/poll
+		[HttpGet]
+		public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+		{
+			var polls = await _mediator.Send(new GetAllPollsQuery(), cancellationToken);
+			return Ok(polls);
 		}
 
 		// GET: api/poll/{url}
