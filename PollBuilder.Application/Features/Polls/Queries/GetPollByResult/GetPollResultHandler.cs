@@ -69,6 +69,7 @@ namespace PollBuilder.Application.Features.Polls.Queries.GetPollByResult
 				.ToList();
 			return new PollResultDto
 			{
+				TitlePoll = poll.Title, 
 				Url = poll.Url,
 				Questions = questions,
 				VoteCount = voteCounts.Values.Sum()

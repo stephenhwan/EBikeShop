@@ -10,5 +10,8 @@
 		public const int Opinion = 200;
 		public const int PollDescription = 5000;
 		public const int OptionText = 200;
+		public const int FullName = 100;
+		public const int Avatar = 500;
+
 	}
 }

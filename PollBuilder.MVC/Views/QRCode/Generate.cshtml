@@ -1,0 +1,72 @@
+﻿@model PollBuilder.MVC.ViewModels.QRCodeVM
+@{
+    ViewData["Title"] = "Generate";
+}
+
+<h1>Generate</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Generate" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label">Text/URL</label>
+                <input asp-for="Text" class="form-control" placeholder="Enter text for QR code" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h1>QRCode đã tạo</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <img id="imgQRCode" src="" alt="QR Code" />
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function generateQRCode() {
+            let inputText = document.getElementById("Text");
+            let text = inputText?.value?.trim();
+            $.ajax({
+                url: "/QRCode/Generate",
+                type: "POST",
+                data: {
+                    text: text
+                },
+                beforeSend: function() {
+                    // console.log("Đang gửi yêu cầu...");
+                },
+                success: function(response) {
+                    var imgQRCode = document.getElementById("imgQRCode");
+                    if (imgQRCode) {
+                        imgQRCode.src = "data:image/png;base64," + response;
+                        // imgQRCode.src = "data:image/png;base64," + btoa(text);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Lỗi:", error);
+                    console.log("Chi tiết:", xhr.responseText);
+                },
+                complete: function() {
+                    console.log("Hoàn tất AJAX request");
+                },
+                timeout: 10000
+            });
+        }
+
+        // function generateQRCode() {
+        //     var text = document.getElementById("Text").value;
+        //     var img = document.getElementById("imgQRCode");
+        //     img.src = "data:image/png;base64," + btoa(text);
+        // }
+    </script>
+}

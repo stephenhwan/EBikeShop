@@ -1,0 +1,23 @@
+﻿@model PollBuilder.MVC.Contracts.Responses.PollResultResponseDto
+
+<h2>Kết quả: @Model.Url</h2>
+<p>Tổng số vote: @Model.VoteCount</p>
+
+@foreach (var q in Model.Questions)
+{
+    <div class="mb-4">
+        <h4>@q.QuestionText</h4>
+        <ul>
+            @foreach (var o in q.Options)
+            {
+                <li>
+                    @o.OptionText
+                    @if (o.IsCurrent)
+                    {
+                        <span>✔</span>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+}
