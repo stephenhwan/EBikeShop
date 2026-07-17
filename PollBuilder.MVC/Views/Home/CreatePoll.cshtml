@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Create Poll";
+}
+
+<h1>Tạo Poll mới</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label class="form-label">Tiêu đề Poll</label>
+            <input type="text" id="pollTitle" class="form-control" placeholder="Nhập tiêu đề poll" />
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Thời gian bắt đầu</label>
+                <input type="datetime-local" id="startAt" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Thời gian kết thúc</label>
+                <input type="datetime-local" id="endAt" class="form-control" />
+            </div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <button type="button" id="btnAddQuestion" class="btn btn-secondary mb-3">+ Add Question</button>
+
+        <div id="createPollError" class="text-danger mb-3"></div>
+
+        <div>
+            <button type="button" id="btnSubmitPoll" class="btn btn-primary">Tạo Poll</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let questionCount = 0;
+    const OPTIONS_PER_QUESTION = 4;
+
+    function addQuestion() {
+        const container = document.getElementById("questionsContainer");
+        const position = questionCount; // tăng dần mỗi lần bấm Add Question -> nằm dưới câu hỏi trước
+
+        const qBlock = document.createElement("div");
+        qBlock.className = "card mb-3 question-block";
+        qBlock.dataset.position = position;
+
+        let optionsHtml = "";
+        for (let i = 0; i < OPTIONS_PER_QUESTION; i++) {
+            optionsHtml += `
+                <div class="mb-2">
+                    <input type="text" class="form-control option-text" placeholder="Lựa chọn ${i + 1}" />
+                </div>`;
+        }
+
+        qBlock.innerHTML = `
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">Câu hỏi ${position + 1}</h5>
+                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove-question">Xóa</button>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control question-text" placeholder="Nhập nội dung câu hỏi" />
+                </div>
+                <label class="form-label">Các lựa chọn</label>
+                ${optionsHtml}
+            </div>
+        `;
+
+        qBlock.querySelector(".btn-remove-question").addEventListener("click", function () {
+            qBlock.remove();
+            renumberQuestions();
+        });
+
+        container.appendChild(qBlock);
+        questionCount++;
+    }
+
+    function renumberQuestions() {
+        const blocks = document.querySelectorAll(".question-block");
+        blocks.forEach((block, idx) => {
+            block.dataset.position = idx;
+            block.querySelector(".card-title").textContent = "Câu hỏi " + (idx + 1);
+        });
+        questionCount = blocks.length;
+    }
+
+    document.getElementById("btnAddQuestion").addEventListener("click", addQuestion);
+
+    // document.getElementById("btnSubmitPoll").addEventListener("click", function () {
+    //     const errorBox = document.getElementById("createPollError");
+    //     errorBox.textContent = "";
+
+    //     const title = document.getElementById("pollTitle").value.trim();
+    //     const startAt = document.getElementById("startAt").value;
+    //     const endAt = document.getElementById("endAt").value;
+        document.getElementById("btnSubmitPoll").addEventListener("click", function () {
+        const errorBox = document.getElementById("createPollError");
+        errorBox.textContent = "";
+
+        const startAtEl = document.getElementById("startAt");
+        const endAtEl = document.getElementById("endAt");
+
+        console.log("startAt element:", startAtEl);
+        console.log("startAt value:", startAtEl?.value);
+        console.log("endAt element:", endAtEl);
+        console.log("endAt value:", endAtEl?.value);
+
+        const title = document.getElementById("pollTitle").value.trim();
+        const startAt = startAtEl.value;
+        const endAt = endAtEl.value;
+
+        if (!title) { errorBox.textContent = "Vui lòng nhập tiêu đề poll."; return; }
+        if (!startAt || !endAt) { errorBox.textContent = "Vui lòng chọn thời gian bắt đầu và kết thúc."; return; }
+
+        const questionBlocks = document.querySelectorAll(".question-block");
+        if (questionBlocks.length === 0) { errorBox.textContent = "Poll phải có ít nhất 1 câu hỏi."; return; }
+
+        const questions = [];
+        let hasError = false;
+
+        questionBlocks.forEach(function (block, qPos) {
+            const questionText = block.querySelector(".question-text").value.trim();
+            if (!questionText) hasError = true;
+
+            const options = [];
+            block.querySelectorAll(".option-text").forEach(function (input, oPos) {
+                const optionText = input.value.trim();
+                if (!optionText) hasError = true;
+                options.push({ optionText: optionText, position: oPos });
+            });
+
+            questions.push({ questionText: questionText, position: qPos, options: options });
+        });
+
+        if (hasError) { errorBox.textContent = "Vui lòng điền đầy đủ nội dung câu hỏi và các lựa chọn."; return; }
+
+        const payload = { title, startAt, endAt, questions };
+
+        fetch("/poll/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(async function (res) {
+            if (!res.ok) throw new Error((await res.text()) || "Tạo poll thất bại.");
+            return res.json();
+        })
+        .then(function (data) {
+            window.location.href = "/poll/" + data.url + "/vote";
+        })
+        .catch(function (err) {
+            errorBox.textContent = err.message;
+        });
+    });
+
+    // Tự thêm sẵn 1 câu hỏi khi mới vào trang cho tiện
+    addQuestion();
+</script>
+}

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\PollBuilder.Common\PollBuilder.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\PollBuilder\" />
+  </ItemGroup>
+
 </Project>

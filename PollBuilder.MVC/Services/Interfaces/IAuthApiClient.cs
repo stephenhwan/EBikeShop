@@ -1,4 +1,5 @@
-﻿using PollBuilder.MVC.Contracts.Responses;
+﻿using PollBuilder.MVC.Contracts.Requests;
+using PollBuilder.MVC.Contracts.Responses;
 
 namespace PollBuilder.MVC.Services.Interfaces
 {
@@ -6,6 +7,6 @@ namespace PollBuilder.MVC.Services.Interfaces
 	{
 		Task<AuthResponseDto?> LoginAsync(string email, string password);
 		Task<AuthResponseDto?> RegisterAsync(string email, string password, string confirmPassword, string? fullName);
-		
+
 	}
 }

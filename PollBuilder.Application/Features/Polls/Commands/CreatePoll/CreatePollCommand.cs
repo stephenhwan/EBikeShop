@@ -17,8 +17,8 @@ namespace PollBuilder.Application.Features.Polls.Commands.CreatePoll
 	string Title,
 		DateTime StartAt,
 		DateTime EndAt,
-	List<CreateQuestionCommand> Questions,
-	string UserId
+	List<CreateQuestionCommand> Questions
+
 	) : IRequest<string>;
 
 

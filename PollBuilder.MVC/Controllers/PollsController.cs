@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PollBuilder.MVC.Contracts.Requests;
 using PollBuilder.MVC.Services.Interfaces;
 
 namespace PollBuilder.MVC.Controllers
@@ -9,6 +10,24 @@ namespace PollBuilder.MVC.Controllers
 	public class PollsController : Controller
 	{
 		private readonly IPollApiClient _pollApiClient;
+
+		[HttpGet("{url}/vote")]
+		public async Task<IActionResult> Vote(string url)
+		{
+			var poll = await _pollApiClient.GetPollAsync(url);
+			if (poll == null) return NotFound();
+			return View(poll);
+		}
+
+		// Action POST Vote đã có sẵn — chỉ cần sửa thêm [FromBody]
+		// vì JS bên dưới gửi JSON array, không phải form data:
+		[HttpPost("{url}/vote")]
+		public async Task<IActionResult> Vote(string url, [FromBody] List<Guid> selectedOptionIds)
+		{
+			var success = await _pollApiClient.SubmitVoteAsync(url, selectedOptionIds);
+			if (!success) return BadRequest("Vote thất bại.");
+			return Ok(new { success });
+		}
 
 		public PollsController(IPollApiClient pollApiClient)
 		{
@@ -26,15 +45,16 @@ namespace PollBuilder.MVC.Controllers
 			return View(dto);
 		}
 
-		[HttpPost("{url}/vote")]
-		public async Task<IActionResult> Vote(string url, List<Guid> selectedOptionIds)
+
+		[HttpPost("create")]
+		public async Task<IActionResult> Create([FromBody] CreatePollRequestDto request)
 		{
-			var success = await _pollApiClient.SubmitVoteAsync(url, selectedOptionIds);
+			var url = await _pollApiClient.CreatePollAsync(request);
 
-			if (!success)
-				return BadRequest("Vote thất bại.");
+			if (string.IsNullOrEmpty(url))
+				return BadRequest("Tạo poll thất bại.");
 
-			return RedirectToAction("Result", new { url });
+			return Ok(new { url });
 		}
 	}
 }

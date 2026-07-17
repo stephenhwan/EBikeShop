@@ -11,6 +11,12 @@ namespace PollBuilder.MVC.Services.Implementations
 		{
 			_httpClient = httpClient;
 		}
+		public async Task<PollResponseDto?> GetPollAsync(string url)
+		{
+			var response = await _httpClient.GetAsync($"api/poll/{url}");
+			if (!response.IsSuccessStatusCode) return null;
+			return await response.Content.ReadFromJsonAsync<PollResponseDto>();
+		}
 
 		public async Task<PollResultResponseDto?> GetPollResultAsync(string url)
 		{
@@ -28,6 +34,23 @@ namespace PollBuilder.MVC.Services.Implementations
 			var response = await _httpClient.PostAsJsonAsync($"api/poll/{url}/vote", request);
 
 			return response.IsSuccessStatusCode;
+		}
+		public async Task<string?> CreatePollAsync(CreatePollRequestDto request)
+		{
+			var response = await _httpClient.PostAsJsonAsync("api/poll", request);
+			if (!response.IsSuccessStatusCode) return null;
+
+			// console log for debug
+			if (!response.IsSuccessStatusCode)
+			{
+				var errorContent = await response.Content.ReadAsStringAsync();
+				Console.WriteLine($"[CreatePollAsync] Status: {response.StatusCode}, Body: {errorContent}");
+				return null;
+			}
+			//
+
+			var result = await response.Content.ReadFromJsonAsync<CreatePollResponseDto>();
+			return result?.Url;
 		}
 	}
 }
